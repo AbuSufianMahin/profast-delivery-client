@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaBoxOpen, FaGlobeAsia, FaHandshake } from 'react-icons/fa';
-import { MdLocalShipping, MdPayment, MdSupportAgent } from 'react-icons/md';
+import { FaBoxOpen, FaGlobeAsia, FaHandHoldingUsd, FaHandshake } from 'react-icons/fa';
+import { MdLocalShipping, MdSupportAgent } from 'react-icons/md';
+import OurServicesCard from './OurServicesCard';
 
 const OurServices = () => {
     const servicesData = [
@@ -12,7 +13,7 @@ const OurServices = () => {
         {
             title: "Cash On Delivery",
             description: "Receive payments easily through our secure cash-on-delivery service.",
-            icon: <MdPayment className="text-4xl text-green-600" />
+            icon: <FaHandHoldingUsd className="text-4xl text-green-600" />
         },
         {
             title: "Parcel Packaging",
@@ -35,24 +36,19 @@ const OurServices = () => {
             icon: <FaHandshake className="text-4xl text-purple-600" />
         }
     ];
+
+
     return (
         <div className="w-11/12 md:w-10/12 mx-auto border py-10 md:py-20 rounded-4xl mb-8 md:mb-20">
             <div className='text-center text-sm md:text-md mb-6 px-5 md:w-1/2 mx-auto'>
                 <h2 className="text-2xl md:text-3xl font-extrabold mb-2">Our Services</h2>
-                <p>Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time.</p>
+                <p className='text-xs md:text-sm'>Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time.</p>
             </div>
             <div className='w-8/10 md:w-9/10 mx-auto'>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {
-                        servicesData.map((service, index) =>
-                            <div
-                                key={index}
-                                className="bg-white shadow-md rounded-2xl p-8 md:p-10 text-center hover:shadow-xl transition-all flex flex-col items-center"
-                            >
-                                <div className="mb-4">{service.icon}</div>
-                                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                                <p className="text-sm text-gray-600">{service.description}</p>
-                            </div>
+                        servicesData.map((serviceData, index) =>
+                            <OurServicesCard key={index} serviceData={serviceData}></OurServicesCard>
                         )
                     }
                 </div>
