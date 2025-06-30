@@ -4,7 +4,7 @@ const BenefitCard = ({featureData}) => {
     const {image, title, description} = featureData;
 
     return (
-        <div className="flex flex-col md:flex-row items-center rounded-2xl shadow-md p-8 gap-8 lg:pr-24 hover:shadow-lg transition">
+        <div className="flex flex-col md:flex-row items-center rounded-2xl shadow-md p-8 gap-8 lg:pr-24 hover:shadow-lg transition bg-neutral">
             <img
                 src={image}
                 alt={title}
