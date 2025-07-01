@@ -23,7 +23,7 @@ const Coverage = () => {
         const cityName = searhQuery;
 
         const matchedLoc = warehousesData.find(loc => loc.city.toLocaleLowerCase() === cityName.trim().toLocaleLowerCase());
-        
+
 
         if (matchedLoc) {
             setFlyToCity(matchedLoc);
@@ -41,15 +41,15 @@ const Coverage = () => {
         // 
     }
     return (
-        <section className='w-11/12 md:w-10/12 mx-auto border rounded-4xl my-8 bg-neutral p-6 md:p-14'>
+        <section className='w-11/12 md:w-10/12 mx-auto shadow-md rounded-4xl my-8 bg-neutral p-6 md:p-14'>
             <div className='space-y-4'>
                 <h1 className='text-xl md:text-3xl lg:text-5xl font-extrabold text-secondary'>We are available in 64 districts</h1>
                 <form onSubmit={handleSearch}>
-                    <div className="join w-full md:w-1/3">
+                    <div className="join w-full md:w-2/3 lg:w-1/3">
                         <div className='w-full'>
                             <label className="input join-item w-full">
                                 <input type="text" placeholder="Enter City Name" onChange={(e) => setSearchQuery(e.target.value)} value={searhQuery} required />
-                                <button type='button' className='btn btn-xs btn-circle' onClick={handleClearSearch}>X</button>
+                                <button type='button' className={`${searhQuery ? '' : 'hidden'}  btn btn-xs btn-circle`} onClick={handleClearSearch}>X</button>
                             </label>
                         </div>
                         <button className="btn btn-primary text-secondary join-item">Searh</button>
@@ -69,7 +69,7 @@ const Coverage = () => {
                         flyToCity && <FlyToLocation lat={flyToCity.latitude} lng={flyToCity.longitude} />
                     }
                     {
-                        goToDefault && <FlyToLocation lat={23.8103} lng={90.4125} zoom={10}/>
+                        goToDefault && <FlyToLocation lat={23.8103} lng={90.4125} zoom={10} />
                     }
                     {
                         warehousesData.map((location, index) =>
