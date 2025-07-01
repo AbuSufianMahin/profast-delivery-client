@@ -6,6 +6,7 @@ import Coverage from '../Pages/HomeLayoutPages/Coverage/Coverage';
 import AuthLayout from '../Layouts/AuthLayout';
 import LoginPage from '../Pages/AuthLayoutPages/LoginPage/LoginPage';
 import RegisterPage from '../Pages/AuthLayoutPages/RegisterPage/RegisterPage';
+import ForgotPassword from '../Pages/AuthLayoutPages/ForgotPassword/ForgotPassword';
 
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path:"register",
         Component: RegisterPage
+      },
+      {
+        path:"/forgot-password",
+        Component: ForgotPassword
       }
     ]
   }

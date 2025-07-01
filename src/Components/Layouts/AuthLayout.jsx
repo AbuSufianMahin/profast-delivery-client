@@ -5,11 +5,11 @@ import { Outlet } from 'react-router';
 const AuthLayout = () => {
     return (
         <div className='flex flex-col md:flex-row h-screen font-inter'>
-            <div className='flex-1 flex flex-col py-10'>
+            <div className='flex-1 py-10'>
                 <div className='w-10/12 mx-auto'>
                     <ProfastLogo></ProfastLogo>
                 </div>
-                <div className='flex-1 w-10/12 lg:w-3/5 mx-auto mt-10'>
+                <div className='flex-1 w-10/12 lg:w-1/2 mx-auto mt-10'>
                     <Outlet></Outlet>
                 </div>
             </div>
