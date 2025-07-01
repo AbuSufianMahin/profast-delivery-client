@@ -1,8 +1,8 @@
 import React from 'react';
 
-import liveTrackingImg from '../../../../assets/pictures/live-tracking.png'
-import safeDeliveryImg from '../../../../assets/pictures/safe-delivery.png'
-import callCenterSupportImg from '../../../../assets/pictures/call-center-support.png'
+import liveTrackingImg from '../../../../../assets/pictures/live-tracking.png'
+import safeDeliveryImg from '../../../../../assets/pictures/safe-delivery.png'
+import callCenterSupportImg from '../../../../../assets/pictures/call-center-support.png'
 import BenefitCard from './BenefitCard';
 
 const BenefitsSection = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import reviewQuote from '../../../../assets/pictures/reviewQuote.png'
+import reviewQuote from '../../../../../assets/pictures/reviewQuote.png'
 import { motion } from 'framer-motion';
 
 const CustomerReviewCard = ({ index, userReview}) => {

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import amazonLogo from "../../../../assets/pictures/brands/amazon.png"
-import casioLogo from "../../../../assets/pictures/brands/casio.png"
-import moonstarLogo from "../../../../assets/pictures/brands/moonstar.png"
-import startPeopleLogo from "../../../../assets/pictures/brands/start-people 1.png"
-import startLogo from "../../../../assets/pictures/brands/start.png"
+import amazonLogo from "../../../../../assets/pictures/brands/amazon.png"
+import casioLogo from "../../../../../assets/pictures/brands/casio.png"
+import moonstarLogo from "../../../../../assets/pictures/brands/moonstar.png"
+import startPeopleLogo from "../../../../../assets/pictures/brands/start-people 1.png"
+import startLogo from "../../../../../assets/pictures/brands/start.png"
 import Marquee from 'react-fast-marquee';
 
 const ClientLogos = () => {

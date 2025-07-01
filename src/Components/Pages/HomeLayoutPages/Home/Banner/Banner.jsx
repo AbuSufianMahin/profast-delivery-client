@@ -1,8 +1,8 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import bannerImg1 from '../../../../assets/pictures/banner/banner1.png'
-import bannerImg2 from '../../../../assets/pictures/banner/banner2.png'
-import bannerImg3 from '../../../../assets/pictures/banner/banner3.png'
+import bannerImg1 from '../../../../../assets/pictures/banner/banner1.png'
+import bannerImg2 from '../../../../../assets/pictures/banner/banner2.png'
+import bannerImg3 from '../../../../../assets/pictures/banner/banner3.png'
 import { Carousel } from 'react-responsive-carousel';
 
 const Banner = () => {

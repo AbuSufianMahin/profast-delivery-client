@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import customerTop from '../../../../assets/pictures/customer-top.png'
-import customerReviews from '../../../../assets/data/reviews.json'
+import customerTop from '../../../../../assets/pictures/customer-top.png'
+import customerReviews from '../../../../../assets/data/reviews.json'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import CustomerReviewCard from './CustomerReviewCard';
 import { motion } from 'framer-motion';

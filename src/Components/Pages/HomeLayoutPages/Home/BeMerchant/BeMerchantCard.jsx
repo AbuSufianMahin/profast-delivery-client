@@ -1,7 +1,7 @@
 import React from 'react';
 
-import background1 from '../../../../assets/pictures/be-a-merchant-bg.png'
-import background2 from '../../../../assets/pictures/location-merchant.png'
+import background1 from '../../../../../assets/pictures/be-a-merchant-bg.png'
+import background2 from '../../../../../assets/pictures/location-merchant.png'
 
 const BeMerchantCard = () => {
     return (
