@@ -14,7 +14,17 @@ const NavbarLinks = () => {
     return (
         <>
             {
-                links.map((link, index) => <li key={index}><NavLink to={link.url}>{link.name}</NavLink></li>)
+                links.map((link, index) =>
+                    <NavLink to={link.url}
+                        className={({ isActive }) =>
+                            isActive ? "bg-primary rounded-4xl" : ""
+                        }
+                    >
+                        <li
+                            key={index}
+                            className='btn btn-ghost rounded-4xl text-secondary hover:bg-primary transform duration-300'>{link.name}
+                        </li>
+                    </NavLink>)
             }
         </>
     );

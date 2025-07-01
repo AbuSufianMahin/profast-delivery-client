@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import profileImage from "../../../../assets/pictures/image-upload-icon.png"
 import { useForm } from 'react-hook-form';
-import { warningToast } from '../../../../Utilities/toastify';
+import { successToast, warningToast } from '../../../../Utilities/toastify';
 import { FaEyeSlash, FaRegEye } from 'react-icons/fa';
 import useAuth from '../../../../hooks/useAuth';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
 
 
 const RegisterPage = () => {
-    const { createEmailUser, updateDisplayName } = useAuth();
+    const { createEmailUser, updateDisplayName, logInWithGoogle } = useAuth();
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -20,6 +20,7 @@ const RegisterPage = () => {
     const [showConfirmPass, setShowConfirmPass] = useState(false);
 
     const navigate = useNavigate();
+
     const formSubmit = (data) => {
         if (pass !== confirmPass) {
             warningToast("Your Passwords does not match. Enter same passwords!");
@@ -32,7 +33,6 @@ const RegisterPage = () => {
 
         createEmailUser(email, password)
             .then(() => {
-
                 updateDisplayName({ displayName })
                     .then(() => { })
                     .catch(err => {
@@ -49,6 +49,18 @@ const RegisterPage = () => {
                 errorAlert("Register Failed", err.message);
             })
 
+    }
+
+    const handleContinueWithGoogle = () => {
+        logInWithGoogle()
+            .then((result) => {
+                navigate('/');
+                const displayNameParts = result.user.displayName.split(' ');
+                successToast(`Welcome, ${displayNameParts[displayNameParts.length - 1] || "User"}!`);
+            })
+            .catch((err) => {
+                errorAlert("", err.message);
+            })
     }
 
     return (
@@ -132,7 +144,7 @@ const RegisterPage = () => {
 
                         <div className="divider">OR</div>
 
-                        <button type="button" className="btn btn-block">
+                        <button type="button" className="btn btn-block" onClick={handleContinueWithGoogle}>
                             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
                             Continue with Google
                         </button>

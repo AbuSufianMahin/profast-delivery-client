@@ -8,9 +8,10 @@ const BenefitCard = ({ featureData, index }) => {
 
         <div
             data-aos={`${index % 2 === 0 ? "fade-left" : "fade-right"}`}
-            // data-aos-duration="5000"
+            data-aos-duration="5000"
             data-aos-offset="0"
             data-aos-delay="5000"
+            data-aos-anchor-placement="top-center"
             className="flex flex-col md:flex-row items-center rounded-2xl shadow-md p-8 gap-8 lg:pr-24 hover:shadow-lg transition bg-neutral">
             <img
                 src={image}

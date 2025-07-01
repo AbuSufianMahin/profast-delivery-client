@@ -7,7 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 const Banner = () => {
     return (
-        <div className='w-11/12 md:w-10/12 mx-auto my-8 md:my-14'>
+        <div className='w-11/12 md:w-10/12 mx-auto my-8 md:my-14 shadow-md rounded-4xl overflow-hidden'>
             <Carousel
                 showArrows={true}
                 autoPlay={true}

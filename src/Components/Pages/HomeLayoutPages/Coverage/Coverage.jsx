@@ -60,7 +60,7 @@ const Coverage = () => {
                 }
             </div>
             <div className="rounded-xl overflow-hidden mt-8">
-                <MapContainer center={[23.8103, 90.4125]} zoom={10} scrollWheelZoom={false} style={{ height: '60vh', width: '100%' }}>
+                <MapContainer center={[23.8103, 90.4125]} zoom={10} scrollWheelZoom={false} style={{ height: '60vh', width: '100%', zIndex: 0 }}>
                     <TileLayer
                         attribution='&copy; OpenStreetMap'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

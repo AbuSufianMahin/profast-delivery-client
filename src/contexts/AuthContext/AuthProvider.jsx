@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, provider);
     }
 
-    const logOut = () => {
+    const logOutUser = () => {
         return signOut(auth)
     }
 
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
         createEmailUser,
         loginEmailUser,
         logInWithGoogle,
-        logOut
+        logOutUser
     }
 
     return (
