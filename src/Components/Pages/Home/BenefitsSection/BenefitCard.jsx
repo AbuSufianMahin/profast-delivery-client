@@ -1,10 +1,17 @@
+import Aos from 'aos';
 import React from 'react';
 
-const BenefitCard = ({featureData}) => {
-    const {image, title, description} = featureData;
+const BenefitCard = ({ featureData, index }) => {
+    const { image, title, description } = featureData;
 
     return (
-        <div className="flex flex-col md:flex-row items-center rounded-2xl shadow-md p-8 gap-8 lg:pr-24 hover:shadow-lg transition bg-neutral">
+
+        <div
+            data-aos={`${index % 2 === 0 ? "fade-left" : "fade-right"}`}
+            // data-aos-duration="5000"
+            data-aos-offset="0"
+            data-aos-delay="5000"
+            className="flex flex-col md:flex-row items-center rounded-2xl shadow-md p-8 gap-8 lg:pr-24 hover:shadow-lg transition bg-neutral">
             <img
                 src={image}
                 alt={title}
@@ -16,6 +23,7 @@ const BenefitCard = ({featureData}) => {
                 <p className="text-sm md:text-base">{description}</p>
             </div>
         </div>
+
     );
 };
 

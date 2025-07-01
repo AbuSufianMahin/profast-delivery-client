@@ -33,14 +33,16 @@ const BenefitsSection = () => {
 
     return (
         <section className="mb-8 md:mb-20">
-            <div className="w-11/12 md:w-9/12 mx-auto border-y-2 border-dashed py-20">
+            <div className="w-11/12 md:w-9/12 mx-auto">
+                <hr className='border-b border-dashed mb-10 md:mb-14 lg:mb-20' />
                 <div className="grid gap-6">
                     {
-                        featuresData.map(featureData =>
-                            <BenefitCard key={featureData.id} featureData={featureData}></BenefitCard>
+                        featuresData.map((featureData, index) =>
+                            <BenefitCard key={featureData.id} index={index} featureData={featureData}></BenefitCard>
                         )
                     }
                 </div>
+                <hr className='border-b border-dashed mt-10 md:mt-14 lg:mt-20' />
             </div>
         </section>
     );

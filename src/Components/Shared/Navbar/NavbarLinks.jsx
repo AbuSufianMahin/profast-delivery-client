@@ -5,7 +5,7 @@ const NavbarLinks = () => {
 
     const links = [
         { url: "/services", name: "Services" },
-        { url: "/covarage", name: "Covarage" },
+        { url: "/coverage", name: "Coverage" },
         { url: "/about Us", name: "About Us" },
         { url: "/pricing", name: "Pricing" },
         { url: "/be-a-rider", name: "Be a rider" }

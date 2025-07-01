@@ -6,7 +6,7 @@ import { NavLink } from 'react-router';
 const Navbar = () => {
     return (
         <div>
-            <nav className="w-11/12 md:w-10/12 mx-auto navbar shadow px-8 py-4 rounded-2xl">
+            <nav className="w-11/12 md:w-10/12 mx-auto navbar shadow md:px-8 md:py-4 rounded-2xl bg-neutral">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
