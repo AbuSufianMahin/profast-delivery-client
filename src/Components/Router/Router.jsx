@@ -7,6 +7,7 @@ import AuthLayout from '../Layouts/AuthLayout';
 import LoginPage from '../Pages/AuthLayoutPages/LoginPage/LoginPage';
 import RegisterPage from '../Pages/AuthLayoutPages/RegisterPage/RegisterPage';
 import ForgotPassword from '../Pages/AuthLayoutPages/ForgotPassword/ForgotPassword';
+import SendParcel from '../Pages/HomeLayoutPages/SendParcel/SendParcel';
 
 
 export const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
         {
           path: '/coverage',
           Component: Coverage
+        },
+        {
+          path: '/send-parcel',
+          Component : SendParcel
         }
     ]
   },

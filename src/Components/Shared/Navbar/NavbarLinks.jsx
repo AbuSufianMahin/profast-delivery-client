@@ -8,14 +8,17 @@ const NavbarLinks = () => {
         { url: "/coverage", name: "Coverage" },
         { url: "/about Us", name: "About Us" },
         { url: "/pricing", name: "Pricing" },
-        { url: "/be-a-rider", name: "Be a rider" }
+        { url: "/be-a-rider", name: "Be a rider" },
+        { url: "/send-parcel", name: "Send Parcel" }
     ];
 
     return (
         <>
             {
                 links.map((link, index) =>
-                    <NavLink to={link.url}
+                    <NavLink
+                        key={index}
+                        to={link.url}
                         className={({ isActive }) =>
                             isActive ? "bg-primary rounded-4xl" : ""
                         }
