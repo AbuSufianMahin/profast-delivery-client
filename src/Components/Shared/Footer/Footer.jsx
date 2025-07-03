@@ -14,7 +14,7 @@ const Footer = () => {
                     <p>Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time.</p>
                 </aside>
                 <nav className='border-y-2 border-dashed w-7/10 md:w-9/10 lg:w-7/10'>
-                    <ul className="menu md:menu-horizontal py-8">
+                    <ul className="menu md:menu-horizontal py-8 text-white gap-2">
                         <NavbarLinks></NavbarLinks>
                     </ul>
                 </nav>

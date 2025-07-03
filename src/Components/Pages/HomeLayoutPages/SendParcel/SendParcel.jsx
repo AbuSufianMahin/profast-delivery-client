@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import warehouseData from "../../../../assets/data/warehouses.json"
 import useAreaOptions from '../../../../hooks/useAreaOptions';
@@ -6,12 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
 import useAuth from '../../../../hooks/useAuth';
-import axios from 'axios';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import InfiniteLoading from '../../../Shared/Loading/LoadingInfinite';
 
 const SendParcel = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [isSendingData, setIsSendingData] = useState(false);
 
     const { register, unregister, formState: { errors }, watch, handleSubmit } = useForm({
         defaultValues: {
@@ -166,16 +167,18 @@ const SendParcel = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-
+                setIsSendingData(true);
                 axiosSecure.post('/add-parcel', formattedParcelData)
                     .then(res => {
                         console.log(res.data);
-                        if (res.data.insertedId){
-                            successAlert("Parcel Confirmed!", "Your parcel booking was successful. Thank you for choosing our service.")
+                        if (res.data.insertedId) {
+                            successAlert("Parcel Confirmed!", "Your parcel booking was successful. Thank you for choosing our service.");
+                            setIsSendingData(false);
                         }
                     })
                     .catch(err => {
                         errorAlert("Oops.. Something went wrong", err.message);
+                        setIsSendingData(false);
                     });
             }
         });
@@ -411,7 +414,7 @@ const SendParcel = () => {
                                         placeholder='Enter Receiver Email'
                                         {...register("receiverEmail", { required: true })}
                                     />
-                                    {errors.receiverEmail && <p className="text-error text-sm">Receiver Email is required</p>}
+                                    {errors.receiverEmail && <p className="text-error text-sm">Receiver Email is required<span className='text-error'>*</span></p>}
                                 </fieldset>
 
                                 {/* Address */}
@@ -441,7 +444,16 @@ const SendParcel = () => {
 
                     <p className='my-6 lg:my-14'>* PickUp Time 4pm-7pm Approx.</p>
                     {/* Submit Button */}
-                    <button type="submit" className="btn btn-primary text-secondary" >Confirm Booking</button>
+                    <div className='flex gap-4 items-center'>
+                        <button type="submit" className="btn btn-primary text-secondary" >Confirm Booking</button>
+
+                        {
+                            isSendingData &&
+                            <div className='text-primary w-10'>
+                                <InfiniteLoading></InfiniteLoading>
+                            </div>
+                        }
+                    </div>
                 </form>
             </div>
         </div>

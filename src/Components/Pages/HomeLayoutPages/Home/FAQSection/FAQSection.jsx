@@ -35,7 +35,7 @@ const FAQSection = () => {
             <div className='space-y-2'>
                 {
                     queries.map((query, index) =>
-                        <div className="collapse collapse-arrow bg-neutral border border-base-300">
+                        <div key={index} className="collapse collapse-arrow bg-neutral border border-base-300">
                             <input type="radio" name="my-accordion-2" defaultChecked />
                             <div className="collapse-title font-semibold">{query.question}</div>
                             <div className="collapse-content text-sm">{query.answer}</div>

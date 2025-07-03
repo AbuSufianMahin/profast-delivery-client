@@ -8,25 +8,31 @@ import LoginPage from '../Pages/AuthLayoutPages/LoginPage/LoginPage';
 import RegisterPage from '../Pages/AuthLayoutPages/RegisterPage/RegisterPage';
 import ForgotPassword from '../Pages/AuthLayoutPages/ForgotPassword/ForgotPassword';
 import SendParcel from '../Pages/HomeLayoutPages/SendParcel/SendParcel';
+import DashboardLayout from '../Layouts/DashboardLayout';
+import MyParcels from '../Pages/DashboardLayoutPages/MyParcels/MyParcels';
+import PrivateRoute from '../../routes.jsx/PrivateRoute';
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: HomeLayout,
-    children : [
-        {
-            index: true,
-            Component: Home
-        },
-        {
-          path: '/coverage',
-          Component: Coverage
-        },
-        {
-          path: '/send-parcel',
-          Component : SendParcel
-        }
+    children: [
+      {
+        index: true,
+        Component: Home
+      },
+      {
+        path: '/coverage',
+        Component: Coverage
+      },
+      {
+        path: '/send-parcel',
+        element:
+          <PrivateRoute>
+            <SendParcel></SendParcel>
+          </PrivateRoute>
+      }
     ]
   },
   {
@@ -34,16 +40,29 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       {
-        path:"login",
+        path: "login",
         Component: LoginPage
       },
       {
-        path:"register",
+        path: "register",
         Component: RegisterPage
       },
       {
-        path:"/forgot-password",
+        path: "/forgot-password",
         Component: ForgotPassword
+      }
+    ]
+  },
+  {
+    path: "/dashboard",
+    element:
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>,
+    children: [
+      {
+        index: true,
+        Component: MyParcels
       }
     ]
   }
