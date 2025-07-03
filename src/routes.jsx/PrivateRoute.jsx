@@ -1,10 +1,11 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import LoadingRing from '../Components/Shared/Loading/LoadingRing';
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
 const PrivateRoute = ({ children }) => {
     const { user, isAuthLoading } = useAuth();
+    const location = useLocation();
 
     if (isAuthLoading) {
         return (
@@ -16,8 +17,8 @@ const PrivateRoute = ({ children }) => {
         )
     }
 
-    if (!user){ 
-        return <Navigate to='/login'></Navigate>
+    if (!user) {
+        return <Navigate state={{from:location.pathname}} to='/login'></Navigate>
     }
 
 

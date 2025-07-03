@@ -3,6 +3,7 @@ import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { deleteWarningAlert, errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import { NavLink } from 'react-router';
 
 const MyParcels = () => {
     const { user } = useAuth();
@@ -16,13 +17,11 @@ const MyParcels = () => {
         }
     })
 
+    // console.log(parcelsData)
+
     const onView = (parcel) => {
         console.log("Viewing:", parcel);
 
-    };
-
-    const onPay = (parcel) => {
-        console.log("Paying for:", parcel);
     };
 
     const handleDelete = (parcel) => {
@@ -98,14 +97,16 @@ const MyParcels = () => {
                                                     View
                                                 </button>
 
-                                                {payment_status !== "paid" && (
-                                                    <button
-                                                        onClick={() => onPay(parcel)}
-                                                        className="btn btn-sm btn-warning px-4"
-                                                    >
-                                                        Pay
-                                                    </button>
-                                                )}
+                                                {
+                                                    payment_status !== "paid" && (
+                                                        <NavLink to={`/dashboard/payment/${_id}`}>
+                                                            <button
+                                                                className="btn btn-sm btn-warning px-4 w-full">
+                                                                Pay
+                                                            </button>
+                                                        </NavLink>
+                                                    )
+                                                }
 
                                                 <button
                                                     onClick={() => handleDelete(parcel)}
@@ -113,8 +114,6 @@ const MyParcels = () => {
                                                 >
                                                     Delete
                                                 </button>
-
-
                                             </td>
                                         </tr>
                                     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { errorAlert } from '../../../../Utilities/sweetAlerts';
@@ -9,14 +9,16 @@ const LoginPage = () => {
     const { loginEmailUser, logInWithGoogle } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const location = useLocation();
+    const from = location.state?.from || "/";
+
     const navigate = useNavigate();
 
-    const formSubmit = (data) => {
+    const handleLogin = (data) => {
         loginEmailUser(data.email, data.password)
             .then((result) => {
-                navigate('/');
-                console.log(result)
-                successToast(`Welcome back, ${result.user.displayName || "User"}!`);
+                navigate(from);
+                successToast(`Welcome, ${result.user.displayName || "User"}!`);
             })
             .catch((err) => {
                 errorAlert("Login failed", err.message);
@@ -26,7 +28,7 @@ const LoginPage = () => {
     const handleGoogleLogin = () => {
         logInWithGoogle()
             .then((result) => {
-                navigate('/');
+                navigate(from);
 
                 const displayNameParts = result.user.displayName.split(' ');
                 successToast(`Welcome back, ${displayNameParts[displayNameParts.length - 1] || "User"}!`);
@@ -42,7 +44,7 @@ const LoginPage = () => {
                 <p className="text-secondary font-semibold mt-2">Login with Profast</p>
 
                 {/* Login Form */}
-                <form className='mt-5' onSubmit={handleSubmit(formSubmit)}>
+                <form className='mt-5' onSubmit={handleSubmit(handleLogin)}>
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend text-lg text-bold">Email</legend>
                         <input type="email" className="input w-full" {...register('email', { required: true })} placeholder="Enter Your Email" />

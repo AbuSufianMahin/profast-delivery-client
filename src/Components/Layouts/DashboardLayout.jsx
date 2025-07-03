@@ -6,7 +6,7 @@ const DashboardLayout = () => {
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            <div className="drawer-content bg-base-300">
                 {/* Navbar */}
                 <div className="navbar bg-base-300 w-full lg:hidden">
                     <div className="flex-none">
@@ -29,20 +29,29 @@ const DashboardLayout = () => {
                     <div className="text-xl md:text-2xl font-extrabold text-secondary">Dashboard</div>
                 </div>
 
-                <div className=''>
+                <div className='min-h-[95vh]'>
                     <Outlet></Outlet>
                 </div>
 
             </div>
             <div className="drawer-side">
-                <ul className="menu bg-base-200 text-base-content min-h-full w-2/3 md:w-1/2 lg:w-80 p-5 md:px-8 md:py-5">
-                    <ProfastLogo></ProfastLogo>
+                <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+
+                <ul className="menu px-0 bg-base-200 text-base-content min-h-full w-2/3 md:w-1/2 lg:w-80">
+                    <div className='px-5 md:px-8 md:py-2'>
+                        <ProfastLogo></ProfastLogo>
+                    </div>
 
                     <div className="divider my-2 md:my-4"></div>
-                    {/* hover:bg-primary transform duration-300 */}
-                    <NavLink to='/dashboard/my-parcels'>
-                        <li className='btn btn-ghost rounded-lg'>My Parcels</li>
-                    </NavLink>
+
+                    <div className='grid gap-1 md:gap-3 px-4'>
+                        <NavLink to='/dashboard/my-parcels'>
+                            <li className='btn btn-sm md:btn-md btn-ghost rounded-lg lg:text-lg'>My Parcels</li>
+                        </NavLink>
+                        <NavLink to='/dashboard/payment-history'>
+                            <li className='btn btn-sm md:btn-md btn-ghost rounded-lg lg:text-lg'>Payment History</li>
+                        </NavLink>
+                    </div>
                 </ul>
             </div>
         </div>
