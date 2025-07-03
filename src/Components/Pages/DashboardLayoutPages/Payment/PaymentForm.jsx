@@ -83,8 +83,7 @@ const PaymentForm = () => {
             else if (result.paymentIntent.status === 'succeeded') {
                 setError('');
                 setPaymentLoading(false);
-                console.log("HI");
-                // mark parcel as paid and make a payment history
+
                 const paymentData = {
                     parcelId,
                     transactionId: result.paymentIntent.id,

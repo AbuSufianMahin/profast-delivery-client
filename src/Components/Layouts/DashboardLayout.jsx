@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router';
+import { Outlet } from 'react-router';
 import ProfastLogo from '../Shared/ProfastLogo/ProfastLogo';
+import DashboardNavlinks from '../Shared/DashboardNavLinks.jsx/DashboardNavlinks';
 
 const DashboardLayout = () => {
     return (
@@ -44,14 +45,7 @@ const DashboardLayout = () => {
 
                     <div className="divider my-2 md:my-4"></div>
 
-                    <div className='grid gap-1 md:gap-3 px-4'>
-                        <NavLink to='/dashboard/my-parcels'>
-                            <li className='btn btn-sm md:btn-md btn-ghost rounded-lg lg:text-lg'>My Parcels</li>
-                        </NavLink>
-                        <NavLink to='/dashboard/payment-history'>
-                            <li className='btn btn-sm md:btn-md btn-ghost rounded-lg lg:text-lg'>Payment History</li>
-                        </NavLink>
-                    </div>
+                    <DashboardNavlinks></DashboardNavlinks>
                 </ul>
             </div>
         </div>

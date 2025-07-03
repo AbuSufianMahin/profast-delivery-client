@@ -17,7 +17,6 @@ const MyParcels = () => {
         }
     })
 
-    // console.log(parcelsData)
 
     const onView = (parcel) => {
         console.log("Viewing:", parcel);
