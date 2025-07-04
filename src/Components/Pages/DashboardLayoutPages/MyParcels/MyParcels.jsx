@@ -43,9 +43,12 @@ const MyParcels = () => {
     };
 
     return (
-        <div className='p-5'>
-            <div className="w-full px-2 md:px-4 py-4">
-                <div className="overflow-x-auto rounded-xl border border-base-200 shadow-md">
+        <div className='px-4 md:px-6 lg:px-14 md:py-8'>
+
+            <div className="w-full">
+                <h1 className='mb-5 text-4xl text-secondary font-extrabold'>Your Parcels</h1>
+
+                <div className="overflow-x-auto rounded-xl shadow-xl border border-base-200">
                     <table className="table table-zebra w-full">
                         <thead className="bg-base-200 text-base-content text-xs md:text-sm uppercase">
                             <tr className='bg-secondary text-white'>

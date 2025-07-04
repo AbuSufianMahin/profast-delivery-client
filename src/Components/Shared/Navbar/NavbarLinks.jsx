@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 
 const NavbarLinks = () => {
-    const {user} = useAuth();
+    const { user } = useAuth();
 
     const links = [
         // { url: "/services", name: "Services" },
@@ -37,25 +37,27 @@ const NavbarLinks = () => {
                     </NavLink>)
             }
 
-            <div className='divider divider-horizontal mx-0'></div>
-
+        
             {
                 user &&
-
-                privateLinks.map((privateLink, index) =>
-                    <NavLink
-                        key={index}
-                        to={privateLink.url}
-                        className={({ isActive }) =>
-                            isActive ? "bg-primary rounded-4xl text-secondary" : ""
-                        }
-                    >
-                        <li
-                            key={index}
-                            className='btn btn-ghost rounded-4xl hover:bg-primary transform duration-300'>{privateLink.name}
-                        </li>
-                    </NavLink>)
-
+                <>
+                    <div className='divider divider-horizontal mx-0'></div>
+                    {
+                        privateLinks.map((privateLink, index) =>
+                            <NavLink
+                                key={index}
+                                to={privateLink.url}
+                                className={({ isActive }) =>
+                                    isActive ? "bg-primary rounded-4xl text-secondary" : ""
+                                }
+                            >
+                                <li
+                                    key={index}
+                                    className='btn btn-ghost rounded-4xl hover:bg-primary transform duration-300'>{privateLink.name}
+                                </li>
+                            </NavLink>)
+                    }
+                </>
             }
         </>
     );

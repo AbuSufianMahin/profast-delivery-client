@@ -20,8 +20,11 @@ const AuthProvider = ({ children }) => {
         }
     }, [])
 
-    const updateDisplayName = (userInfo) => {
-        setUser({ ...user, displayName: userInfo.displayName })
+    const updateUserInfo = (userInfo) => {
+        for (let key in userInfo) {
+            setUser({ ...user, [key]: userInfo[key] })
+        }
+
         return updateProfile(auth.currentUser, userInfo);
     }
 
@@ -47,8 +50,7 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         isAuthLoading,
-        updateDisplayName,
-
+        updateUserInfo,
         createEmailUser,
         loginEmailUser,
         logInWithGoogle,

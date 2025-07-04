@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
     if (isAuthLoading) {
         return (
-            <div className='flex justify-center border '>
+            <div className='flex justify-center'>
                 <div className='w-20 pt-12 min-h-[50vh]'>
                     <LoadingRing></LoadingRing>
                 </div>

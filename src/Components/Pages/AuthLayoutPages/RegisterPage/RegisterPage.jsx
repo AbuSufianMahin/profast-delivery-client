@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import profileImage from "../../../../assets/pictures/image-upload-icon.png"
 import { useForm } from 'react-hook-form';
@@ -6,10 +6,12 @@ import { successToast, warningToast } from '../../../../Utilities/toastify';
 import { FaEyeSlash, FaRegEye } from 'react-icons/fa';
 import useAuth from '../../../../hooks/useAuth';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import axios from 'axios';
+import LoadingInfinite from '../../../Shared/Loading/LoadingInfinite';
 
 
 const RegisterPage = () => {
-    const { createEmailUser, updateDisplayName, logInWithGoogle } = useAuth();
+    const { createEmailUser, logInWithGoogle, updateUserInfo } = useAuth();
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -20,6 +22,29 @@ const RegisterPage = () => {
     const [showConfirmPass, setShowConfirmPass] = useState(false);
 
     const navigate = useNavigate();
+
+    const [userImage, setUserImage] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
+
+    const handleImageUpload = async (e) => {
+        const image = e.target.files[0];
+        setIsUploading(true);
+
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const imageUploadURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imgbb_upload_key}`;
+
+        const res = await axios.post(imageUploadURL, formData);
+
+        if (res.data.data.url) {
+            setIsUploading(false);
+            setUserImage(res.data.data.url);
+        }
+
+    }
+
+
 
     const formSubmit = (data) => {
         if (pass !== confirmPass) {
@@ -33,12 +58,13 @@ const RegisterPage = () => {
 
         createEmailUser(email, password)
             .then(() => {
-                updateDisplayName({ displayName })
+                updateUserInfo({ displayName, photoURL: userImage })
                     .then(() => { })
                     .catch(err => {
                         errorAlert("", err.message);
                         return;
                     })
+
 
                 const displayNameParts = displayName.split(' ');
                 successAlert("Registration Complete", `Thank you, ${displayNameParts[displayNameParts.length - 1]}. Your Profast account has been successfully created.`)
@@ -69,7 +95,43 @@ const RegisterPage = () => {
                 <h1 className="text-4xl font-extrabold">Create an Account</h1>
                 <p className="text-secondary font-semibold mt-2">Register with Profast</p>
 
-                <img src={profileImage} alt="" className='mt-4' />
+                <div className='flex flex-col items-center w-fit mt-5'>
+                    <div className="relative ">
+                        <input
+                            id="profile-upload"
+                            type="file"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                            accept="image/*"
+                        />
+                        <label htmlFor="profile-upload" className="cursor-pointer">
+                            {
+                                isUploading ?
+                                    <div className='w-20 rounded-full object-cover border-2 border-gray-300'>
+                                        <LoadingInfinite></LoadingInfinite>
+                                    </div>
+                                    :
+
+                                    <img
+                                        src={userImage || profileImage}
+                                        alt="Upload"
+                                        className={`w-20 h-20 rounded-full object-cover border-2 border-gray-300 hover:opacity-90 transition ${userImage ? "mr-6" : ""} `}
+                                    />
+                            }
+                        </label>
+                    </div>
+
+                    {
+                        userImage ?
+                            <div className='flex items-center gap-3'>
+                                <p className="text-green-600 text-sm">Image selected</p>
+                                <button className='btn btn-sm btn-circle' onClick={() => setUserImage('')}>X</button>
+                            </div>
+                            :
+                            <p className='text-gray-600 text-sm'>Upload Your Picture</p>
+                    }
+                </div>
+
                 {/* Login Form */}
                 <form className='mt-2' onSubmit={handleSubmit(formSubmit)}>
                     <fieldset className="fieldset">
