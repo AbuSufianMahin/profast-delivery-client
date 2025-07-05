@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import warehouseData from "../../../../assets/data/warehouses.json"
 import useAreaOptions from '../../../../hooks/useAreaOptions';
@@ -8,6 +8,7 @@ import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import InfiniteLoading from '../../../Shared/Loading/LoadingInfinite';
+import useCityOptions from '../../../../hooks/useCityOptions';
 
 const SendParcel = () => {
     const { user } = useAuth();
@@ -22,10 +23,7 @@ const SendParcel = () => {
 
     const parcelType = watch("parcelType");
 
-    const cityOptions = useMemo(() => {
-        const cities = warehouseData.map(w => w.city);
-        return [...new Set(cities)];
-    }, []);
+    const cityOptions = useCityOptions(warehouseData);
 
     const senderSelectedCity = watch("senderCity");
     const senderAreaOptions = useAreaOptions(warehouseData, senderSelectedCity);
@@ -35,7 +33,6 @@ const SendParcel = () => {
 
     useEffect(() => {
         if (parcelType === "document") {
-
             unregister("parcelWeight");
         }
     }, [parcelType, unregister])

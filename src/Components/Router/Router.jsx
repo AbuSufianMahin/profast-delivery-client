@@ -13,6 +13,7 @@ import MyParcels from '../Pages/DashboardLayoutPages/MyParcels/MyParcels';
 import PrivateRoute from '../../routes.jsx/PrivateRoute';
 import Payment from '../Pages/DashboardLayoutPages/Payment/Payment';
 import PaymentHistory from '../Pages/DashboardLayoutPages/PaymentHistory/PaymentHistory';
+import BeARider from '../Pages/HomeLayoutPages/BeARider/BeARider';
 
 
 export const router = createBrowserRouter([
@@ -33,6 +34,13 @@ export const router = createBrowserRouter([
         element:
           <PrivateRoute>
             <SendParcel></SendParcel>
+          </PrivateRoute>
+      },
+      {
+        path: "/be-a-rider",
+        element:
+          <PrivateRoute>
+            <BeARider></BeARider>
           </PrivateRoute>
       }
     ]
@@ -67,15 +75,15 @@ export const router = createBrowserRouter([
         Component: MyParcels
       },
       {
-        path:"my-parcels",
+        path: "my-parcels",
         Component: MyParcels
       },
       {
-        path:"payment/:parcelId",
+        path: "payment/:parcelId",
         Component: Payment
       },
       {
-        path:"payment-history",
+        path: "payment-history",
         Component: PaymentHistory
       }
     ]

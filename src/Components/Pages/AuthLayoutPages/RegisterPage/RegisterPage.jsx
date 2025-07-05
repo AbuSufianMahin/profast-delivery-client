@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import profileImage from "../../../../assets/pictures/image-upload-icon.png"
 import { useForm } from 'react-hook-form';
 import { successToast, warningToast } from '../../../../Utilities/toastify';
@@ -8,6 +8,7 @@ import useAuth from '../../../../hooks/useAuth';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
 import axios from 'axios';
 import LoadingInfinite from '../../../Shared/Loading/LoadingInfinite';
+import useAxios from '../../../../hooks/useAxios';
 
 
 const RegisterPage = () => {
@@ -21,30 +22,37 @@ const RegisterPage = () => {
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
 
+    const location = useLocation();
+    const from = location.state?.from || "/";
+
     const navigate = useNavigate();
+    const axiosPublic = useAxios();
 
     const [userImage, setUserImage] = useState('');
     const [isUploading, setIsUploading] = useState(false);
 
+    console.log(userImage);
     const handleImageUpload = async (e) => {
-        const image = e.target.files[0];
+        let image = e.target.files[0];
+        console.log(e);
         setIsUploading(true);
 
         const formData = new FormData();
         formData.append("image", image);
 
         const imageUploadURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imgbb_upload_key}`;
+        console.log(image);
 
         const res = await axios.post(imageUploadURL, formData);
-
+        // console.log(res.data);
         if (res.data.data.url) {
             setIsUploading(false);
             setUserImage(res.data.data.url);
+            image = "";
         }
+    
 
     }
-
-
 
     const formSubmit = (data) => {
         if (pass !== confirmPass) {
@@ -57,7 +65,19 @@ const RegisterPage = () => {
 
 
         createEmailUser(email, password)
-            .then(() => {
+            .then(async () => {
+
+                const userInfo = {
+                    email,
+                    displayName,
+                    role: "user", //default role
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString()
+                }
+
+                const userRes = await axiosPublic.post('/users', userInfo);
+                console.log(userRes.data);
+
                 updateUserInfo({ displayName, photoURL: userImage })
                     .then(() => { })
                     .catch(err => {
@@ -65,10 +85,9 @@ const RegisterPage = () => {
                         return;
                     })
 
-
                 const displayNameParts = displayName.split(' ');
                 successAlert("Registration Complete", `Thank you, ${displayNameParts[displayNameParts.length - 1]}. Your Profast account has been successfully created.`)
-                    .then(() => navigate('/'));
+                    .then(() => navigate(from));
                 reset();
             })
             .catch((err) => {
@@ -79,8 +98,22 @@ const RegisterPage = () => {
 
     const handleContinueWithGoogle = () => {
         logInWithGoogle()
-            .then((result) => {
-                navigate('/');
+            .then(async (result) => {
+
+                const user = result.user;
+
+                const userInfo = {
+                    email : user.email,
+                    displayName: user.displayName,
+                    role: "user", //default role
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString()
+                }
+
+                const userResponse = await axiosPublic.post("/users", userInfo);
+                console.log(userResponse.data);
+
+                navigate(from);
                 const displayNameParts = result.user.displayName.split(' ');
                 successToast(`Welcome, ${displayNameParts[displayNameParts.length - 1] || "User"}!`);
             })
@@ -135,17 +168,17 @@ const RegisterPage = () => {
                 {/* Login Form */}
                 <form className='mt-2' onSubmit={handleSubmit(formSubmit)}>
                     <fieldset className="fieldset">
-                        <legend className="fieldset-legend text-lg">Name</legend>
-                        <input type="text" className="input w-full" {...register("userName")} placeholder="Enter Your Name" required />
-
+                        <legend className="fieldset-legend text-lg">Name<span className='text-error text-sm -ml-2'>*</span></legend>
+                        <input type="text" className="input w-full" {...register("userName", { required: true })} placeholder="Enter Your Name" />
+                        {errors.userName && <p className='text-error'>Name is Required</p>}
                     </fieldset>
                     <fieldset className="fieldset">
-                        <legend className="fieldset-legend text-lg">Email</legend>
-                        <input type="email" className="input w-full" {...register('email')} placeholder="Enter Your Email" required />
-
+                        <legend className="fieldset-legend text-lg">Email<span className='text-error text-sm -ml-2'>*</span></legend>
+                        <input type="email" className="input w-full" {...register('email', { required: true })} placeholder="Enter Your Email" />
+                        {errors.email && <p className='text-error'>Email is Required</p>}
                     </fieldset>
                     <fieldset className="fieldset">
-                        <legend className="fieldset-legend text-lg">Password</legend>
+                        <legend className="fieldset-legend text-lg">Password<span className='text-error text-sm -ml-2'>*</span></legend>
                         <label className={`input validator px-0 overflow-hidden w-full`}>
                             <input
                                 type={`${showPass ? "text" : "password"}`}
@@ -176,7 +209,7 @@ const RegisterPage = () => {
                     </fieldset>
 
                     <fieldset className="fieldset">
-                        <legend className="fieldset-legend text-lg">Confirm Password</legend>
+                        <legend className="fieldset-legend text-lg">Confirm Password<span className='text-error text-sm -ml-2'>*</span></legend>
                         <label className="input px-0 overflow-hidden w-full">
                             <input
                                 type={`${showConfirmPass ? "text" : "password"}`}

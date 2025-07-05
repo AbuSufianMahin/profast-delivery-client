@@ -10,12 +10,12 @@ const NavbarLinks = () => {
         { url: "/coverage", name: "Coverage" },
         // { url: "/about Us", name: "About Us" },
         // { url: "/pricing", name: "Pricing" },
-        // { url: "/be-a-rider", name: "Be a rider" },
-        { url: "/send-parcel", name: "Send Parcel" }
+        { url: "/send-parcel", name: "Send Parcel" },
+        { url: "/be-a-rider", name: "Be a rider" },
 
     ];
 
-    const privateLinks = [
+    const hiddenLinks = [
         { url: "/dashboard", name: "Dashboard" }
     ]
 
@@ -43,7 +43,7 @@ const NavbarLinks = () => {
                 <>
                     <div className='divider divider-horizontal mx-0'></div>
                     {
-                        privateLinks.map((privateLink, index) =>
+                        hiddenLinks.map((privateLink, index) =>
                             <NavLink
                                 key={index}
                                 to={privateLink.url}

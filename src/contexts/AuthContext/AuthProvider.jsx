@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
 
     const updateUserInfo = (userInfo) => {
         for (let key in userInfo) {
-            setUser({ ...user, [key]: userInfo[key] })
+            setUser({ ...user, [key]: userInfo[key] });
         }
 
         return updateProfile(auth.currentUser, userInfo);
