@@ -2,7 +2,7 @@ import React from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { deleteWarningAlert, errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import { confirmWarningAlert, errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
 import { NavLink } from 'react-router';
 
 const MyParcels = () => {
@@ -16,15 +16,14 @@ const MyParcels = () => {
             return res.data;
         }
     })
-
-
+    console.log(parcelsData)
     const onView = (parcel) => {
         console.log("Viewing:", parcel);
 
     };
 
     const handleDelete = (parcel) => {
-        deleteWarningAlert()
+        confirmWarningAlert()
             .then((result) => {
                 if (result.isConfirmed) {
 

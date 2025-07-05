@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 
 const DashboardNavlinks = () => {
@@ -29,6 +29,21 @@ const DashboardNavlinks = () => {
             icon: <FaUserEdit className="text-lg md:text-xl" />,
             label: 'Update Profile',
         },
+        {
+            path: '/dashboard/active-riders',
+            icon: <FaUserCheck className="text-lg md:text-xl" />,
+            label: 'Active Riders',
+        },
+        {
+            path: '/dashboard/pending-riders',
+            icon: <FaUserClock className="text-lg md:text-xl" />,
+            label: 'Pending Riders',
+        },
+        {
+            path: '/dashboard/rejected-riders',
+            icon: <FaUserTimes className="text-lg md:text-xl" />,
+            label: 'Rejected Riders',
+        }
     ];
 
     return (

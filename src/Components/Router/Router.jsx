@@ -14,6 +14,9 @@ import PrivateRoute from '../../routes.jsx/PrivateRoute';
 import Payment from '../Pages/DashboardLayoutPages/Payment/Payment';
 import PaymentHistory from '../Pages/DashboardLayoutPages/PaymentHistory/PaymentHistory';
 import BeARider from '../Pages/HomeLayoutPages/BeARider/BeARider';
+import ActiveRiders from '../Pages/DashboardLayoutPages/ActiveRiders/ActiveRiders';
+import PendingRiders from '../Pages/DashboardLayoutPages/PendingRiders/PendingRiders';
+import RejectedRides from '../Pages/DashboardLayoutPages/RejectedRiders.jsx/RejectedRides';
 
 
 export const router = createBrowserRouter([
@@ -85,6 +88,18 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         Component: PaymentHistory
+      },
+      {
+        path: "active-riders",
+        element: <ActiveRiders></ActiveRiders>
+      },
+      {
+        path: "pending-riders",
+        element: <PendingRiders></PendingRiders>
+      },
+      {
+        path: "rejected-riders",
+        element: <RejectedRides></RejectedRides>
       }
     ]
   }

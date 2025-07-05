@@ -17,7 +17,7 @@ const errorAlert = (title, message) => {
     });
 }
 
-const deleteWarningAlert = (title, message) => {
+const confirmWarningAlert = (title, message) => {
     return Swal.fire({
         title: title || "Are you sure?",
         text:  message ||  "You won't be able to revert this!",
@@ -25,9 +25,10 @@ const deleteWarningAlert = (title, message) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Yes, go ahead!",
         cancelButtonText: "No, go back!"
     })
 }
 
-export { successAlert, errorAlert, deleteWarningAlert  };
+
+export { successAlert, errorAlert, confirmWarningAlert  };

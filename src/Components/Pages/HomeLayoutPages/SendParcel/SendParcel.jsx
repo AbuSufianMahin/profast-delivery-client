@@ -183,9 +183,6 @@ const SendParcel = () => {
                     });
             }
         });
-
-
-
     };
 
     return (

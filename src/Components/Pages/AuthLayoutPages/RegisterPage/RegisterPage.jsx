@@ -129,18 +129,18 @@ const RegisterPage = () => {
                 <p className="text-secondary font-semibold mt-2">Register with Profast</p>
 
                 <div className='flex flex-col items-center w-fit mt-5'>
-                    <div className="relative ">
+                    <div className="relative">
                         <input
                             id="profile-upload"
                             type="file"
                             onChange={handleImageUpload}
-                            className="hidden"
+                            className="hidden border-4 rounded-full border-primary"
                             accept="image/*"
                         />
                         <label htmlFor="profile-upload" className="cursor-pointer">
                             {
                                 isUploading ?
-                                    <div className='w-20 rounded-full object-cover border-2 border-gray-300'>
+                                    <div className='w-20 border-4 rounded-full border-primary object-cover'>
                                         <LoadingInfinite></LoadingInfinite>
                                     </div>
                                     :
@@ -148,7 +148,7 @@ const RegisterPage = () => {
                                     <img
                                         src={userImage || profileImage}
                                         alt="Upload"
-                                        className={`w-20 h-20 rounded-full object-cover border-2 border-gray-300 hover:opacity-90 transition ${userImage ? "mr-6" : ""} `}
+                                        className={`border-4 rounded-full border-primary w-20 h-20 object-cover  hover:opacity-90 transition ${userImage ? "mr-6" : ""} `}
                                     />
                             }
                         </label>
