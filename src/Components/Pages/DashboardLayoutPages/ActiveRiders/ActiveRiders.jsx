@@ -14,8 +14,8 @@ const ActiveRiders = () => {
         }
     })
     return (
-        <div className='border min-h-screen px-4 md:px-6 lg:px-14 md:py-8'>
-            <h2 className="text-xl font-semibold mb-4">Active Riders</h2>
+        <div className='min-h-screen px-4 md:px-6 lg:px-14 md:py-8'>
+            <h1 className='mb-5 text-4xl text-secondary font-extrabold'>Active Riders</h1>
 
             <div className="overflow-x-auto shadow-md rounded-lg border border-base-300">
                 <table className="table table-zebra w-full bg-neutral">
@@ -33,21 +33,22 @@ const ActiveRiders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {activeRiders?.map((rider, index) => (
-                            <tr key={rider._id || index}>
-                                <td>{index + 1}</td>
-                                <td>{rider.riderName}</td>
-                                <td>{rider.riderAge}</td>
-                                <td>{rider.riderContact}</td>
-                                <td>{rider.vehicleType}</td>
-                                <td>{rider.riderCity}</td>
-                                <td>{rider.riderWarehouse}</td>
-                                <td>{new Date(rider.updated_at).toLocaleString()}</td>
-                                <td>
-                                    <span className="badge badge-success text-white">{rider.status}</span>
-                                </td>
-                            </tr>
-                        ))}
+                        {
+                            activeRiders?.map((rider, index) => (
+                                <tr key={rider._id || index}>
+                                    <td>{index + 1}</td>
+                                    <td>{rider.riderName}</td>
+                                    <td>{rider.riderAge}</td>
+                                    <td>{rider.riderContact}</td>
+                                    <td>{rider.vehicleType}</td>
+                                    <td>{rider.riderCity}</td>
+                                    <td>{rider.riderWarehouse}</td>
+                                    <td>{new Date(rider.updated_at).toLocaleString()}</td>
+                                    <td>
+                                        <span className="badge badge-success rounded-4xl text-white">{rider.status}</span>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
 

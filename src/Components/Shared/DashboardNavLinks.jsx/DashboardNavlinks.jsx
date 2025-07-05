@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 
 const DashboardNavlinks = () => {
@@ -43,6 +43,11 @@ const DashboardNavlinks = () => {
             path: '/dashboard/rejected-riders',
             icon: <FaUserTimes className="text-lg md:text-xl" />,
             label: 'Rejected Riders',
+        },
+        {
+            path: '/dashboard/make-admin',
+            icon: <FaUserShield className="text-lg md:text-xl" />,
+            label: 'Make Admin',
         }
     ];
 
@@ -54,7 +59,7 @@ const DashboardNavlinks = () => {
                     <NavLink
                         to={link.path}
                         className={({ isActive }) =>
-                            `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
+                            `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
                             ${isActive
                                 ? 'bg-primary text-secondary font-bold'
                                 : 'hover:bg-base-300'}`

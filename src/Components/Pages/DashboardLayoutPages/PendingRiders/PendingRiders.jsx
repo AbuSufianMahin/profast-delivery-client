@@ -67,7 +67,7 @@ const PendingRiders = () => {
                                 :
                                 pendingRidersData.length === 0 ?
                                 <tr>
-                                    <td colSpan={9} className='text-center py-6 text-lg text-gray-600'>There are no pending Rider Requests</td>
+                                    <td colSpan={9} className='md:text-center py-6 md:text-lg text-gray-600'>There are no pending Rider Requests</td>
                                 </tr>
                                 
                                 :

@@ -17,6 +17,7 @@ import BeARider from '../Pages/HomeLayoutPages/BeARider/BeARider';
 import ActiveRiders from '../Pages/DashboardLayoutPages/ActiveRiders/ActiveRiders';
 import PendingRiders from '../Pages/DashboardLayoutPages/PendingRiders/PendingRiders';
 import RejectedRides from '../Pages/DashboardLayoutPages/RejectedRiders.jsx/RejectedRides';
+import MakeAdmin from '../Pages/DashboardLayoutPages/MakeAdmin/MakeAdmin';
 
 
 export const router = createBrowserRouter([
@@ -100,6 +101,10 @@ export const router = createBrowserRouter([
       {
         path: "rejected-riders",
         element: <RejectedRides></RejectedRides>
+      },
+      {
+        path: "make-admin",
+        element: <MakeAdmin></MakeAdmin>
       }
     ]
   }
