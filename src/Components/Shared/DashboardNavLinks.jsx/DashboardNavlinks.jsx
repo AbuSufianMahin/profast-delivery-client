@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield } from 'react-icons/fa';
 import { NavLink } from 'react-router';
+import useUserRole from '../../../hooks/useUserRole';
 
 const DashboardNavlinks = () => {
-    const navItems = [
+    const { userRole, isRoleLoading } = useUserRole();
+
+    const openLinks = [
         {
             path: '/',
             icon: <FaHome className="text-lg md:text-xl" />,
@@ -29,6 +32,9 @@ const DashboardNavlinks = () => {
             icon: <FaUserEdit className="text-lg md:text-xl" />,
             label: 'Update Profile',
         },
+    ];
+
+    const adminLinks = [
         {
             path: '/dashboard/active-riders',
             icon: <FaUserCheck className="text-lg md:text-xl" />,
@@ -49,27 +55,52 @@ const DashboardNavlinks = () => {
             icon: <FaUserShield className="text-lg md:text-xl" />,
             label: 'Make Admin',
         }
-    ];
+    ]
 
     return (
 
         <div className='grid gap-1 md:gap-2 pl-4 pr-6 md:pr-14'>
-            {navItems.map((link, index) => (
-                <li key={index}>
-                    <NavLink
-                        to={link.path}
-                        className={({ isActive }) =>
-                            `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
+            {
+                openLinks.map((link, index) =>
+                    <li key={index}>
+                        <NavLink
+                            to={link.path}
+                            className={({ isActive }) =>
+                                `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
                             ${isActive
-                                ? 'bg-primary text-secondary font-bold'
-                                : 'hover:bg-base-300'}`
-                        }
-                    >
-                        {link.icon}
-                        {link.label}
-                    </NavLink>
-                </li>
-            ))}
+                                    ? 'bg-primary text-secondary font-bold'
+                                    : 'hover:bg-base-300'}`
+                            }
+                        >
+                            {link.icon}
+                            {link.label}
+                        </NavLink>
+                    </li>)
+            }
+
+            {
+                userRole === "admin" && !isRoleLoading &&
+                <>
+                    <div className="divider text-sm font-bold text-secondary uppercase tracking-wider">Admin Controls</div>
+                    {
+                        adminLinks.map((link, index) =>
+                            <li key={index}>
+                                <NavLink
+                                    to={link.path}
+                                    className={({ isActive }) =>
+                                        `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
+                            ${isActive
+                                            ? 'bg-primary text-secondary font-bold'
+                                            : 'hover:bg-base-300'}`
+                                    }
+                                >
+                                    {link.icon}
+                                    {link.label}
+                                </NavLink>
+                            </li>)
+                    }
+                </>
+            }
 
         </div>
 

@@ -4,11 +4,14 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { FaUserShield, FaUserTimes } from 'react-icons/fa';
 import LoadingBars from '../../../Shared/Loading/LoadingBars';
 import { confirmWarningAlert, errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import useUserRole from '../../../../hooks/useUserRole';
 // import useDebounce from '../../../../hooks/useDebounce';
 const MakeAdmin = () => {
     const axiosSecure = useAxiosSecure();
 
     const [emailQuery, setEmailQuery] = useState("");
+
+    const { roleRefetch } = useUserRole();
 
     // const debouncedEmailQuery = useDebounce(emailQuery, 500);
 
@@ -50,6 +53,7 @@ const MakeAdmin = () => {
                     try {
                         await updateRole({ userId, role: newRole });
                         successAlert("Role Updated", `User role changed to ${newRole}`);
+                        roleRefetch();
                     } catch (err) {
                         errorAlert("Failed to update role", err.message);
                     }

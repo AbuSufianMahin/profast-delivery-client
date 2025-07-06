@@ -18,6 +18,8 @@ import ActiveRiders from '../Pages/DashboardLayoutPages/ActiveRiders/ActiveRider
 import PendingRiders from '../Pages/DashboardLayoutPages/PendingRiders/PendingRiders';
 import RejectedRides from '../Pages/DashboardLayoutPages/RejectedRiders.jsx/RejectedRides';
 import MakeAdmin from '../Pages/DashboardLayoutPages/MakeAdmin/MakeAdmin';
+import TrackAPackage from '../Pages/DashboardLayoutPages/TrackAPackage/TrackAPackage';
+import UpdateProfile from '../Pages/DashboardLayoutPages/UpdateProfile/UpdateUser';
 
 
 export const router = createBrowserRouter([
@@ -89,6 +91,14 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         Component: PaymentHistory
+      },
+      {
+        path: "track-package",
+        Component: TrackAPackage
+      },
+      {
+        path: "update-profile",
+        Component: UpdateProfile
       },
       {
         path: "active-riders",
