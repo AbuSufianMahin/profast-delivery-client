@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import riderImage from "../../../../assets/pictures/agent-pending.png"
 import useCityOptions from '../../../../hooks/useCityOptions';
 import warehouseData from "../../../../assets/data/warehouses.json"
@@ -7,11 +7,13 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import LoadingInfinite from '../../../Shared/Loading/LoadingInfinite';
 
 
 const BeARider = () => {
     const { user } = useAuth();
-    const { register, unregister, formState: { errors }, watch, handleSubmit } = useForm();
+    const { register, unregister, formState: { errors }, watch, handleSubmit, reset } = useForm();
+    const [isSendingData, setIsSendingData] = useState(false);
 
     const selectedVehicle = watch("vehicleType");
     useEffect(() => {
@@ -30,15 +32,19 @@ const BeARider = () => {
 
     const handleRegisterRider = (data) => {
         const riderData = { ...data, status: "pending", created_at: new Date().toISOString(), riderAge: parseInt(data.riderAge) };
+        setIsSendingData(true);
 
         axiosSecure.post('/add-riders', riderData)
             .then(res => {
-                if (res.data.insertedId){
+                if (res.data.insertedId) {
                     successAlert("Application Submitted!", 'Your rider application has been successfully submitted.');
+                    setIsSendingData(false);
+                    reset();
                 }
             })
             .catch(error => {
                 errorAlert("Oops...", error.message)
+                setIsSendingData(false);
             })
     }
 
@@ -194,8 +200,14 @@ const BeARider = () => {
                                 {errors.riderWarehouse && <p className="text-error text-sm">Warehouse is required</p>}
                             </fieldset>
 
-                            <div className="col-span-1 md:col-span-2">
+                            <div className="flex gap-2 col-span-1 md:col-span-2 w-fit">
                                 <button type="submit" className="btn btn-primary px-6 text-secondary">Submit</button>
+                                {
+                                    isSendingData &&
+                                    <div className='w-10'>
+                                        <LoadingInfinite></LoadingInfinite>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </form>

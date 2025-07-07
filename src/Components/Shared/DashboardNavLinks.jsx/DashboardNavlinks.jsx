@@ -2,6 +2,7 @@ import React from 'react';
 import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 import useUserRole from '../../../hooks/useUserRole';
+import LoadingInfinite from '../Loading/LoadingInfinite';
 
 const DashboardNavlinks = () => {
     const { userRole, isRoleLoading } = useUserRole();
@@ -78,6 +79,7 @@ const DashboardNavlinks = () => {
                     </li>)
             }
 
+
             {
                 userRole === "admin" && !isRoleLoading &&
                 <>
@@ -88,17 +90,17 @@ const DashboardNavlinks = () => {
                                 <NavLink
                                     to={link.path}
                                     className={({ isActive }) =>
-                                        `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200
-                            ${isActive
-                                            ? 'bg-primary text-secondary font-bold'
-                                            : 'hover:bg-base-300'}`
+                                        `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${isActive ?
+                                            'bg-primary text-secondary font-bold'
+                                            :
+                                            'hover:bg-base-300'}`
                                     }
                                 >
                                     {link.icon}
                                     {link.label}
                                 </NavLink>
-                            </li>)
-                    }
+                            </li>
+                        )}
                 </>
             }
 

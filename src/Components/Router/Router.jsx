@@ -10,7 +10,7 @@ import ForgotPassword from '../Pages/AuthLayoutPages/ForgotPassword/ForgotPasswo
 import SendParcel from '../Pages/HomeLayoutPages/SendParcel/SendParcel';
 import DashboardLayout from '../Layouts/DashboardLayout';
 import MyParcels from '../Pages/DashboardLayoutPages/MyParcels/MyParcels';
-import PrivateRoute from '../../routes.jsx/PrivateRoute';
+import PrivateRoute from '../../routes/PrivateRoute';
 import Payment from '../Pages/DashboardLayoutPages/Payment/Payment';
 import PaymentHistory from '../Pages/DashboardLayoutPages/PaymentHistory/PaymentHistory';
 import BeARider from '../Pages/HomeLayoutPages/BeARider/BeARider';
@@ -20,6 +20,10 @@ import RejectedRides from '../Pages/DashboardLayoutPages/RejectedRiders.jsx/Reje
 import MakeAdmin from '../Pages/DashboardLayoutPages/MakeAdmin/MakeAdmin';
 import TrackAPackage from '../Pages/DashboardLayoutPages/TrackAPackage/TrackAPackage';
 import UpdateProfile from '../Pages/DashboardLayoutPages/UpdateProfile/UpdateUser';
+
+import AdminRoute from '../../routes/AdminRoute';
+import ErrorLayout from '../Layouts/ErrorLayout';
+import Forbidden from '../Pages/ErrorLayout/Forbidden/Forbidden';
 
 
 export const router = createBrowserRouter([
@@ -32,18 +36,18 @@ export const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: '/coverage',
+        path: 'coverage',
         Component: Coverage
       },
       {
-        path: '/send-parcel',
+        path: 'send-parcel',
         element:
           <PrivateRoute>
             <SendParcel></SendParcel>
           </PrivateRoute>
       },
       {
-        path: "/be-a-rider",
+        path: "be-a-rider",
         element:
           <PrivateRoute>
             <BeARider></BeARider>
@@ -102,19 +106,30 @@ export const router = createBrowserRouter([
       },
       {
         path: "active-riders",
-        element: <ActiveRiders></ActiveRiders>
+        element: <AdminRoute><ActiveRiders></ActiveRiders></AdminRoute>
       },
       {
         path: "pending-riders",
-        element: <PendingRiders></PendingRiders>
+        element: <AdminRoute><PendingRiders></PendingRiders></AdminRoute>
       },
       {
         path: "rejected-riders",
-        element: <RejectedRides></RejectedRides>
+        element: <AdminRoute><RejectedRides></RejectedRides></AdminRoute>
       },
       {
         path: "make-admin",
-        element: <MakeAdmin></MakeAdmin>
+        element: <AdminRoute><MakeAdmin></MakeAdmin></AdminRoute>
+      },
+      
+    ]
+  },
+  {
+    path: '/error',
+    Component : ErrorLayout,
+    children: [
+      {
+        path: "forbidden",
+        Component: Forbidden
       }
     ]
   }

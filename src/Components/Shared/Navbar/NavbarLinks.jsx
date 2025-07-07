@@ -16,7 +16,7 @@ const NavbarLinks = () => {
     ];
 
     const hiddenLinks = [
-        { url: "/dashboard", name: "Dashboard" }
+        { url: "/dashboard/my-parcels", name: "Dashboard" }
     ]
 
     return (

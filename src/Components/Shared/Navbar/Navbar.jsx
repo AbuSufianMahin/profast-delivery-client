@@ -7,6 +7,7 @@ import { warningToast } from '../../../Utilities/toastify';
 
 const Navbar = () => {
     const { user, logOutUser } = useAuth();
+    console.log(user);
 
     const handleLogout = () => {
         logOutUser();
