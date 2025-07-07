@@ -31,11 +31,12 @@ const AssignRider = () => {
         }
     })
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleShowRiderList = async (parcel) => {
+    const handleShowRiderList = (parcel) => {
+        setIsModalOpen(true);
         setSenderDetails(parcel.senderDetails);
     }
-
 
     const handleAssignRider = async (parcel, rider) => {
         try {
@@ -44,6 +45,8 @@ const AssignRider = () => {
                 successAlert("Rider Assigned", "The rider has been successfully assigned to the parcel.")
             }
             refetch();
+            setIsModalOpen(false);
+
         }
         catch (error) {
             errorAlert("Something went wrong", error.message);
@@ -125,14 +128,14 @@ const AssignRider = () => {
                                                 </label>
 
                                                 {/* Modal */}
-                                                <input type="checkbox" id="available_rider_modal" className="modal-toggle" />
+                                                <input type="checkbox" id="available_rider_modal" className="modal-toggle" checked={isModalOpen}  />
                                                 <div className="modal" role='dialog'>
                                                     <div className="modal-box max-w-5xl relative">
 
                                                         {/* Close Button (Top Right) */}
                                                         <div className="flex justify-between items-center mb-4">
                                                             <h3 className="font-bold text-lg text-secondary">Rider Details</h3>
-                                                            <label htmlFor="available_rider_modal" className="btn btn-sm btn-circle btn-ghost">
+                                                            <label htmlFor="available_rider_modal" className="btn btn-sm btn-circle btn-ghost" onClick={() => setIsModalOpen(false)}>
                                                                 ✕
                                                             </label>
                                                         </div>
