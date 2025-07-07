@@ -63,8 +63,8 @@ const MakeAdmin = () => {
 
 
     return (
-        <div className='min-h-screen px-4 md:px-6 lg:px-14 md:py-8'>
-            <h1 className='mb-5 text-4xl text-secondary font-extrabold'>Search User to make admin</h1>
+        <div className='min-h-screen p-4 md:p-6 lg:p-14'>
+            <h1 className='mb-5 text-2xl md:text-4xl text-secondary font-extrabold'>Search User to make admin</h1>
 
 
             <label className="input md:w-1/2 lg:w-1/3">

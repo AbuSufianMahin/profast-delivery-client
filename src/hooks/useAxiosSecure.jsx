@@ -11,7 +11,7 @@ const useAxiosSecure = () => {
     const { user, logOutUser } = useAuth();
 
     const navigate = useNavigate();
-    
+
     axiosSecure.interceptors.request.use(config => {
 
         config.headers.authorization = `Bearer ${user.accessToken}`
@@ -22,17 +22,21 @@ const useAxiosSecure = () => {
     })
 
     axiosSecure.interceptors.response.use(res => {
+        
         return res;
-    }), (error) => {
+    }, (error) => {
         const status = error.status;
-
-        if (status === 403){
+        // console.log("Error Status in axiosSecure Response: ", status)
+        if (status === 403) {
+            console.log("Here")
             navigate('/error/forbidden')
         }
-        else if (status === 401){
+        else if (status === 401) {
             logOutUser().then(() => navigate('/login'))
         }
-    }
+
+        return Promise.reject(error);
+    })
 
     return axiosSecure;
 };

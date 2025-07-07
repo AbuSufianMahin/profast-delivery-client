@@ -32,34 +32,31 @@ const PaymentHistory = () => {
                             <thead className="bg-base-200 text-base-content">
                                 <tr className='bg-secondary text-neutral'>
                                     <th>#</th>
-                                    {/* <th>Parcel Name</th> */} {/* You can populate this later */}
+                                    {/* <th>Parcel Name</th> //You can populate this later */}
                                     <th>Transaction ID</th>
                                     <th>Amount</th>
                                     <th>Payer</th>
-
                                     <th>Paid At</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    paymentData.length === 0 ?
-                                        <tr>
-                                            <td colSpan="6" className="text-center p-4 text-gray-500">
-                                                No Payment Data found.
-                                            </td>
+                                {paymentData.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="5" className="text-center p-4 text-gray-500">
+                                            No Payment Data found.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    paymentData.map((payment, index) => (
+                                        <tr key={payment._id}>
+                                            <td>{index + 1}</td>
+                                            <td className="break-all">{payment.transactionId}</td>
+                                            <td>৳{payment.amount}</td>
+                                            <td>{payment.payerName}</td>
+                                            <td>{payment.paidAt}</td>
                                         </tr>
-                                        :
-                                        paymentData.map((payment, index) =>
-                                            <tr key={payment._id?.$oid || index}>
-                                                <td>{index + 1}</td>
-                                                {/* <td>{payment.parcelName}</td> */} {/* Add this later */}
-                                                <td className="break-all">{payment.transactionId}</td>
-                                                <td>৳{payment.amount}</td>
-                                                <td>{payment.payerName}</td>
-                                                <td>{payment.paidAt}</td> {/* Raw ISO string */}
-                                            </tr>
-                                        )
-                                }
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

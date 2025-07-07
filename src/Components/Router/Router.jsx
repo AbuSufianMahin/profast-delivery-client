@@ -24,6 +24,7 @@ import UpdateProfile from '../Pages/DashboardLayoutPages/UpdateProfile/UpdateUse
 import AdminRoute from '../../routes/AdminRoute';
 import ErrorLayout from '../Layouts/ErrorLayout';
 import Forbidden from '../Pages/ErrorLayout/Forbidden/Forbidden';
+import AssignRider from '../Pages/DashboardLayoutPages/AssignRider/AssignRider';
 
 
 export const router = createBrowserRouter([
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
         path: "make-admin",
         element: <AdminRoute><MakeAdmin></MakeAdmin></AdminRoute>
       },
+      {
+        path: "assign-rider",
+        element: <AdminRoute><AssignRider></AssignRider></AdminRoute>
+      }
       
     ]
   },

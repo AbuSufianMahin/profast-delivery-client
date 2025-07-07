@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield, FaMotorcycle } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 import useUserRole from '../../../hooks/useUserRole';
 import LoadingInfinite from '../Loading/LoadingInfinite';
@@ -55,6 +55,11 @@ const DashboardNavlinks = () => {
             path: '/dashboard/make-admin',
             icon: <FaUserShield className="text-lg md:text-xl" />,
             label: 'Make Admin',
+        },
+        {
+            path: '/dashboard/assign-rider',
+            icon: <FaMotorcycle className="text-lg md:text-xl" />,
+            label: 'Assign Rider',
         }
     ]
 

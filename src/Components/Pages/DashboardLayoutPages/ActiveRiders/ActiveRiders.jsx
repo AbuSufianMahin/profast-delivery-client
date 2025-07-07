@@ -14,8 +14,8 @@ const ActiveRiders = () => {
         }
     })
     return (
-        <div className='min-h-screen px-4 md:px-6 lg:px-14 md:py-8'>
-            <h1 className='mb-5 text-4xl text-secondary font-extrabold'>Active Riders</h1>
+        <div className='min-h-screen p-4 md:p-6 lg:p-14'>
+            <h1 className='mb-5 text-2xl md:text-4xl text-secondary font-extrabold'>Active Riders</h1>
 
             <div className="overflow-x-auto shadow-md rounded-lg border border-base-300">
                 <table className="table table-zebra w-full bg-neutral">

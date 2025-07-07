@@ -15,7 +15,7 @@ const SendParcel = () => {
     const axiosSecure = useAxiosSecure();
     const [isSendingData, setIsSendingData] = useState(false);
 
-    const { register, unregister, formState: { errors }, watch, handleSubmit } = useForm({
+    const { register, unregister, formState: { errors }, watch, handleSubmit, reset } = useForm({
         defaultValues: {
             parcelType: "document",
         }
@@ -171,10 +171,10 @@ const SendParcel = () => {
                 setIsSendingData(true);
                 axiosSecure.post('/add-parcel', formattedParcelData)
                     .then(res => {
-                        console.log(res.data);
                         if (res.data.insertedId) {
                             successAlert("Parcel Confirmed!", "Your parcel booking was successful. Thank you for choosing our service.");
                             setIsSendingData(false);
+                            reset();
                         }
                     })
                     .catch(err => {
@@ -249,6 +249,9 @@ const SendParcel = () => {
                                             type="text"
                                             className="input input-bordered w-full"
                                             placeholder='Sender Name'
+                                            defaultValue={user.displayName}
+                                            readOnly
+                                            title="You cant change this input field" 
                                             {...register("senderName", { required: true })}
                                         />
                                         {errors.senderName && <p className="text-error text-sm">Sender Name is required</p>}
