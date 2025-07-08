@@ -4,15 +4,17 @@ import warehouseData from "../../../../assets/data/warehouses.json"
 import useAreaOptions from '../../../../hooks/useAreaOptions';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
-import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import { errorAlert, successAlertWithTimer } from '../../../../Utilities/sweetAlerts';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import InfiniteLoading from '../../../Shared/Loading/LoadingInfinite';
 import useCityOptions from '../../../../hooks/useCityOptions';
+import { useNavigate } from 'react-router';
 
 const SendParcel = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
     const [isSendingData, setIsSendingData] = useState(false);
 
     const { register, unregister, formState: { errors }, watch, handleSubmit, reset } = useForm({
@@ -172,7 +174,8 @@ const SendParcel = () => {
                 axiosSecure.post('/add-parcel', formattedParcelData)
                     .then(res => {
                         if (res.data.insertedId) {
-                            successAlert("Parcel Confirmed!", "Your parcel booking was successful. Thank you for choosing our service.");
+                            successAlertWithTimer("Parcel Confirmed!", "Your parcel booking was successful. Redirecting you to your parcels page....")
+                            .then(() => navigate('/dashboard/my-parcels'));
                             setIsSendingData(false);
                             reset();
                         }

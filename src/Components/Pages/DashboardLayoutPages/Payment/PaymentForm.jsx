@@ -30,10 +30,12 @@ const PaymentForm = () => {
     })
 
     const { parcelDetails, senderDetails, receiverDetails } = parcelData;
+    const [isClicked, setIsClicked] = useState(false);
 
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
         setPaymentLoading(true);
+        setIsClicked(true);
 
         if (!stripe || !elements) {
             return;
@@ -51,10 +53,12 @@ const PaymentForm = () => {
         })
 
         const amount = parcelDetails.deliveryCharge;
-        const amountInCents = amount * 100
+        const amountInCents = amount * 100;
+
         if (error) {
             setError(error.message);
             setPaymentLoading(false);
+            setIsClicked(false);
             return;
         }
         else {
@@ -79,6 +83,7 @@ const PaymentForm = () => {
             if (result.error) {
                 setError(result.error.message);
                 setPaymentLoading(false);
+                setIsClicked(false);
             }
             else if (result.paymentIntent.status === 'succeeded') {
                 setError('');
@@ -185,7 +190,7 @@ const PaymentForm = () => {
                                     ></CardElement>
                                     <button
                                         type="submit"
-                                        disabled={!stripe}
+                                        disabled={!stripe || isClicked}
                                         className="btn btn-primary w-full font-semibold text-secondary"
                                     >
                                         Pay ৳{parcelDetails.deliveryCharge}

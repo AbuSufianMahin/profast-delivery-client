@@ -20,7 +20,7 @@ const errorAlert = (title, message) => {
 const confirmWarningAlert = (title, message) => {
     return Swal.fire({
         title: title || "Are you sure?",
-        text:  message ||  "You won't be able to revert this!",
+        text: message || "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -31,4 +31,15 @@ const confirmWarningAlert = (title, message) => {
 }
 
 
-export { successAlert, errorAlert, confirmWarningAlert  };
+const successAlertWithTimer = (title, message, time) => {
+    return Swal.fire({
+        icon: "success",
+        title: title || "Your work has been saved",
+        text: message || "",
+        showConfirmButton: false,
+        timer: time || 3000
+    });
+}
+
+
+export { successAlert, errorAlert, confirmWarningAlert, successAlertWithTimer  };
