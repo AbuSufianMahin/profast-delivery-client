@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { errorAlert, successAlert } from '../../../../Utilities/sweetAlerts';
+import LoadingInfinite from '../../../Shared/Loading/LoadingInfinite';
 
 const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: parcelsToAssign = [] } = useQuery({
+    const { data: parcelsToAssign = [], refetch: refetchParcelsToAssign } = useQuery({
         queryKey: ['notCollectedPaidParcels'],
         queryFn: async () => {
             const res = await axiosSecure.get('/parcels?delivery_status=not_collected&payment_status=paid');
@@ -17,9 +18,9 @@ const AssignRider = () => {
 
     const [senderDetails, setSenderDetails] = useState(null);
 
-    const { data: availableRiders = [], refetch } = useQuery({
+    const { data: availableRiders = [], refetch: refetchAvailableRiders } = useQuery({
         queryKey: ["availableRiders", senderDetails],
-        enabled: !!senderDetails,
+        // enabled: !!senderDetails,
         queryFn: async () => {
             const res = await axiosSecure.get('/riders/available', {
                 params: {
@@ -31,26 +32,37 @@ const AssignRider = () => {
         }
     })
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [openParcelId, setOpenParcelId] = useState(null);
+    const closeModal = () => setOpenParcelId(null);
 
     const handleShowRiderList = (parcel) => {
-        setIsModalOpen(true);
+
+        setOpenParcelId(parcel._id);
         setSenderDetails(parcel.senderDetails);
     }
 
+    const [isAssigning, setIsAssigning] = useState(false);
+
     const handleAssignRider = async (parcel, rider) => {
+        setIsAssigning(true);
         try {
+            console.log(parcel._id);
             const res = await axiosSecure.patch(`/parcels/${parcel._id}/assign-rider`, { rider });
             if (res.data.modifiedCount) {
                 successAlert("Rider Assigned", "The rider has been successfully assigned to the parcel.")
             }
-            refetch();
-            setIsModalOpen(false);
+            setIsAssigning(false);
 
+            refetchParcelsToAssign();
+            refetchAvailableRiders();
+            closeModal();
         }
         catch (error) {
+            setIsAssigning(false);
             errorAlert("Something went wrong", error.message);
         }
+        
     }
 
 
@@ -88,6 +100,7 @@ const AssignRider = () => {
                                         <tr key={parcel._id}>
                                             <td>{index + 1}</td>
                                             <td>{parcelDetails.trackingId}</td>
+                                            {/* <td>{parcel._id}</td> */}
                                             <td>
                                                 <div>
                                                     <div className="font-bold">{senderDetails.name}</div>
@@ -120,26 +133,37 @@ const AssignRider = () => {
                                             <td>
                                                 {/* Trigger button */}
                                                 <label
-                                                    htmlFor="available_rider_modal"
+                                                    htmlFor={`rider_modal_${parcel._id}`}
                                                     className="btn h-fit py-1 btn-sm btn-primary text-secondary w-full sm:w-auto text-sm"
                                                     onClick={() => handleShowRiderList(parcel)}
                                                 >
                                                     Available Riders
                                                 </label>
 
-                                                {/* Modal */}
-                                                <input type="checkbox" id="available_rider_modal" className="modal-toggle" checked={isModalOpen} />
-                                                <div className="modal" role='dialog'>
+                                                {/* DaisyUI Modal */}
+                                                <input
+                                                    type="checkbox"
+                                                    id={`rider_modal_${parcel._id}`}
+                                                    className="modal-toggle"
+                                                    checked={openParcelId === parcel._id}
+                                                    readOnly
+                                                />
+                                                <div className="modal bg-transparent" role="dialog">
                                                     <div className="modal-box max-w-5xl relative">
-
-                                                        {/* Close Button (Top Right) */}
+                                                        {/* Header */}
                                                         <div className="flex justify-between items-center mb-4">
-                                                            <h3 className="font-bold text-2xl text-secondary">Rider Details</h3>
-                                                            <label htmlFor="available_rider_modal" className="btn btn-sm btn-circle btn-ghost" onClick={() => setIsModalOpen(false)}>
+                                                            <h3 className="font-bold text-2xl text-secondary">Available Riders</h3>
+                                                            <p>Parcel ID: {parcel._id}</p>
+                                                            <label
+                                                                htmlFor={`rider_modal_${parcel._id}`}
+                                                                className="btn btn-sm btn-circle btn-ghost"
+                                                                onClick={closeModal}
+                                                            >
                                                                 ✕
                                                             </label>
                                                         </div>
 
+                                                        {/* Rider List Table */}
                                                         <div className="overflow-x-auto shadow rounded-lg">
                                                             <table className="table">
                                                                 <thead className="bg-secondary text-white">
@@ -155,37 +179,37 @@ const AssignRider = () => {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {
-                                                                        availableRiders.length === 0 ?
-                                                                            <tr>
-                                                                                <td className='md:text-center' colSpan={8}>No rider is available</td>
+                                                                    {availableRiders.length === 0 ? (
+                                                                        <tr>
+                                                                            <td colSpan={8} className="text-center">No rider is available</td>
+                                                                        </tr>
+                                                                    ) : (
+                                                                        availableRiders.map((rider, i) => (
+                                                                            <tr key={rider._id}>
+                                                                                <td>{i + 1}</td>
+                                                                                <td>{rider.riderName}</td>
+                                                                                <td>{rider.riderEmail}</td>
+                                                                                <td>{rider.riderContact}</td>
+                                                                                <td>{rider.riderCity}</td>
+                                                                                <td>{rider.riderWarehouse}</td>
+                                                                                <td>{rider.vehicleType}</td>
+                                                                                <td>
+                                                                                    <button
+                                                                                        className="btn btn-sm btn-success text-white"
+                                                                                        onClick={() => handleAssignRider(parcel, rider)}
+                                                                                    >
+                                                                                        Assign {isAssigning && <span className='w-6'><LoadingInfinite></LoadingInfinite></span>}
+                                                                                    </button>
+                                                                                </td>
                                                                             </tr>
-                                                                            :
-
-                                                                            availableRiders?.map((rider, index) => (
-                                                                                <tr key={rider._id}>
-                                                                                    <td>{index + 1}</td>
-                                                                                    <td>{rider.riderName}</td>
-                                                                                    <td>{rider.riderEmail}</td>
-                                                                                    <td>{rider.riderContact}</td>
-                                                                                    <td>{rider.riderCity}</td>
-                                                                                    <td>{rider.riderWarehouse}</td>
-                                                                                    <td>{rider.vehicleType}</td>
-                                                                                    <td>
-                                                                                        <button
-                                                                                            className="btn btn-sm btn-success text-white"
-                                                                                            onClick={() => handleAssignRider(parcel, rider)}
-                                                                                        >
-                                                                                            Assign
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            ))}
+                                                                        ))
+                                                                    )}
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </td>
 
                                         </tr>

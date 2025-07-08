@@ -3,7 +3,7 @@ import useUserRole from '../hooks/useUserRole';
 import LoadingInfinite from '../Components/Shared/Loading/LoadingInfinite';
 import { Navigate } from 'react-router';
 
-const AdminRoute = ({ children }) => {
+const RiderRoute = ({children}) => {
     const { userRole, isRoleLoading } = useUserRole();
 
     if (isRoleLoading) {
@@ -16,11 +16,11 @@ const AdminRoute = ({ children }) => {
         )
     }
 
-    if (userRole !== "admin"){
+    if (userRole !== "rider"){
         return <Navigate to='/error/forbidden'></Navigate>
     }
 
-    return children;
+    return children
 };
 
-export default AdminRoute;
+export default RiderRoute;

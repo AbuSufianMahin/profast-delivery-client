@@ -25,6 +25,8 @@ import AdminRoute from '../../routes/AdminRoute';
 import ErrorLayout from '../Layouts/ErrorLayout';
 import Forbidden from '../Pages/ErrorLayout/Forbidden/Forbidden';
 import AssignRider from '../Pages/DashboardLayoutPages/AssignRider/AssignRider';
+import PendingDeliveries from '../Pages/DashboardLayoutPages/PendingDeliveries/PendingDeliveries';
+import RiderRoute from '../../routes/RiderRoute';
 
 
 export const router = createBrowserRouter([
@@ -105,6 +107,14 @@ export const router = createBrowserRouter([
         path: "update-profile",
         Component: UpdateProfile
       },
+
+      // Routes for Riders only
+      {
+        path: "pending-deliveries",
+        element: <RiderRoute><PendingDeliveries></PendingDeliveries></RiderRoute>
+      },
+
+      // Routes for Admin only
       {
         path: "active-riders",
         element: <AdminRoute><ActiveRiders></ActiveRiders></AdminRoute>
@@ -125,12 +135,12 @@ export const router = createBrowserRouter([
         path: "assign-rider",
         element: <AdminRoute><AssignRider></AssignRider></AdminRoute>
       }
-      
+
     ]
   },
   {
     path: '/error',
-    Component : ErrorLayout,
+    Component: ErrorLayout,
     children: [
       {
         path: "forbidden",

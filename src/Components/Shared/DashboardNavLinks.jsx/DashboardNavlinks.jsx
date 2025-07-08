@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield, FaMotorcycle } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield, FaMotorcycle, FaClock } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 import useUserRole from '../../../hooks/useUserRole';
 import LoadingInfinite from '../Loading/LoadingInfinite';
@@ -34,6 +34,14 @@ const DashboardNavlinks = () => {
             label: 'Update Profile',
         },
     ];
+
+    const riderLinks = [
+        {
+            path: '/dashboard/pending-deliveries',
+            icon: <FaClock className="text-lg md:text-xl" />,
+            label: 'Pending Deliveries',
+        }
+    ]
 
     const adminLinks = [
         {
@@ -84,6 +92,30 @@ const DashboardNavlinks = () => {
                     </li>)
             }
 
+            {
+                !isRoleLoading && userRole === "rider" &&
+                <>
+                    <div className="divider text-sm font-bold text-secondary uppercase tracking-wider">Rider Tools</div>
+                    {
+                        riderLinks.map((link, index) =>
+                            <li key={index}>
+                                <NavLink
+                                    to={link.path}
+                                    className={({ isActive }) =>
+                                        `flex shadow-sm items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${isActive ?
+                                            'bg-primary text-secondary font-bold'
+                                            :
+                                            'hover:bg-base-300'}`
+                                    }
+                                >
+                                    {link.icon}
+                                    {link.label}
+                                </NavLink>
+                            </li>
+                        )}
+                </>
+
+            }
 
             {
                 userRole === "admin" && !isRoleLoading &&
