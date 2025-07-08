@@ -128,22 +128,20 @@ const AssignRider = () => {
                                                 </label>
 
                                                 {/* Modal */}
-                                                <input type="checkbox" id="available_rider_modal" className="modal-toggle" checked={isModalOpen}  />
+                                                <input type="checkbox" id="available_rider_modal" className="modal-toggle" checked={isModalOpen} />
                                                 <div className="modal" role='dialog'>
                                                     <div className="modal-box max-w-5xl relative">
 
                                                         {/* Close Button (Top Right) */}
                                                         <div className="flex justify-between items-center mb-4">
-                                                            <h3 className="font-bold text-lg text-secondary">Rider Details</h3>
+                                                            <h3 className="font-bold text-2xl text-secondary">Rider Details</h3>
                                                             <label htmlFor="available_rider_modal" className="btn btn-sm btn-circle btn-ghost" onClick={() => setIsModalOpen(false)}>
                                                                 ✕
                                                             </label>
                                                         </div>
 
-                                                        <h3 className="font-bold text-xl mb-4">Available Riders</h3>
-
-                                                        <div className="overflow-x-auto">
-                                                            <table className="table table-zebra">
+                                                        <div className="overflow-x-auto shadow rounded-lg">
+                                                            <table className="table">
                                                                 <thead className="bg-secondary text-white">
                                                                     <tr>
                                                                         <th>#</th>
@@ -157,25 +155,32 @@ const AssignRider = () => {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {availableRiders?.map((rider, index) => (
-                                                                        <tr key={rider._id}>
-                                                                            <td>{index + 1}</td>
-                                                                            <td>{rider.riderName}</td>
-                                                                            <td>{rider.riderEmail}</td>
-                                                                            <td>{rider.riderContact}</td>
-                                                                            <td>{rider.riderCity}</td>
-                                                                            <td>{rider.riderWarehouse}</td>
-                                                                            <td>{rider.vehicleType}</td>
-                                                                            <td>
-                                                                                <button
-                                                                                    className="btn btn-sm btn-success text-white"
-                                                                                    onClick={() => handleAssignRider(parcel, rider)}
-                                                                                >
-                                                                                    Assign
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    ))}
+                                                                    {
+                                                                        availableRiders.length === 0 ?
+                                                                            <tr>
+                                                                                <td className='md:text-center' colSpan={8}>No rider is available</td>
+                                                                            </tr>
+                                                                            :
+
+                                                                            availableRiders?.map((rider, index) => (
+                                                                                <tr key={rider._id}>
+                                                                                    <td>{index + 1}</td>
+                                                                                    <td>{rider.riderName}</td>
+                                                                                    <td>{rider.riderEmail}</td>
+                                                                                    <td>{rider.riderContact}</td>
+                                                                                    <td>{rider.riderCity}</td>
+                                                                                    <td>{rider.riderWarehouse}</td>
+                                                                                    <td>{rider.vehicleType}</td>
+                                                                                    <td>
+                                                                                        <button
+                                                                                            className="btn btn-sm btn-success text-white"
+                                                                                            onClick={() => handleAssignRider(parcel, rider)}
+                                                                                        >
+                                                                                            Assign
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            ))}
                                                                 </tbody>
                                                             </table>
                                                         </div>
