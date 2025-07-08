@@ -48,7 +48,7 @@ const AssignRider = () => {
         setIsAssigning(true);
         try {
             console.log(parcel._id);
-            const res = await axiosSecure.patch(`/parcels/${parcel._id}/assign-rider`, { rider });
+            const res = await axiosSecure.patch(`/parcels/${parcel.trackingId}/assign-rider`, { rider });
             if (res.data.modifiedCount) {
                 successAlert("Rider Assigned", "The rider has been successfully assigned to the parcel.")
             }
@@ -149,7 +149,7 @@ const AssignRider = () => {
                                                     readOnly
                                                 />
                                                 <div className="modal bg-transparent" role="dialog">
-                                                    <div className="modal-box max-w-5xl relative">
+                                                    <div className="modal-box max-w-7xl relative">
                                                         {/* Header */}
                                                         <div className="flex justify-between items-center mb-4">
                                                             <h3 className="font-bold text-2xl text-secondary">Available Riders</h3>
@@ -174,7 +174,7 @@ const AssignRider = () => {
                                                                         <th>Contact</th>
                                                                         <th>City</th>
                                                                         <th>Warehouse</th>
-                                                                        <th>Vehicle</th>
+                                                                        <th className='text-center'>Parcel Assigned</th>
                                                                         <th>Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -192,11 +192,11 @@ const AssignRider = () => {
                                                                                 <td>{rider.riderContact}</td>
                                                                                 <td>{rider.riderCity}</td>
                                                                                 <td>{rider.riderWarehouse}</td>
-                                                                                <td>{rider.vehicleType}</td>
+                                                                                <td className='text-center'>{rider.assignedParcels ? rider.assignedParcels.length : 0}</td>
                                                                                 <td>
                                                                                     <button
                                                                                         className="btn btn-sm btn-success text-white"
-                                                                                        onClick={() => handleAssignRider(parcel, rider)}
+                                                                                        onClick={() => handleAssignRider(parcelDetails, rider)}
                                                                                     >
                                                                                         Assign {isAssigning && <span className='w-6'><LoadingInfinite></LoadingInfinite></span>}
                                                                                     </button>

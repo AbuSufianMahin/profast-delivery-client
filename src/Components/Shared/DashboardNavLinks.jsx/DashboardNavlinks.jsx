@@ -1,8 +1,10 @@
 import React from 'react';
-import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield, FaMotorcycle, FaClock } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaHistory, FaTruckMoving, FaUserEdit, FaUserCheck, FaUserClock, FaUserTimes, FaUserShield, FaMotorcycle } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 import useUserRole from '../../../hooks/useUserRole';
-import LoadingInfinite from '../Loading/LoadingInfinite';
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { AiOutlineClockCircle } from "react-icons/ai";
+
 
 const DashboardNavlinks = () => {
     const { userRole, isRoleLoading } = useUserRole();
@@ -38,8 +40,13 @@ const DashboardNavlinks = () => {
     const riderLinks = [
         {
             path: '/dashboard/pending-deliveries',
-            icon: <FaClock className="text-lg md:text-xl" />,
+            icon: <AiOutlineClockCircle className="text-lg md:text-xl" />,
             label: 'Pending Deliveries',
+        },
+        {
+            path: '/dashboard/completed-deliveries',
+            icon: < IoMdCheckmarkCircleOutline className="text-lg md:text-xl" />,
+            label: 'Completed Deliveries',
         }
     ]
 

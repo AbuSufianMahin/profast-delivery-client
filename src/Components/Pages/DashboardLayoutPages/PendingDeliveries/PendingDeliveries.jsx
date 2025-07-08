@@ -22,10 +22,16 @@ const PendingDeliveries = () => {
 
     const [statusChangingFor, setStatusChangingFor] = useState(false);
 
-    const handleDeliveryStatusChange = async (trackingId, newStatus) => {
+    const handleDeliveryStatusChange = async (trackingId, newStatus, riderEmail) => {
         setStatusChangingFor(trackingId);
         try {
-            const res = await axiosSecure.patch(`/parcels/status/${trackingId}`, { status: newStatus });
+            // this will update the status in parcelCollection
+            const res = await axiosSecure.patch(`/parcels/status/${trackingId}`, { status: newStatus, riderEmail });
+
+            // if the delivery status is "delivered" 
+            // The parcel TrackingId will be added to completed parcel attribute
+            // also the tracking id will be deleted from assignedparcel
+            // this all will happen in the backend
 
             if (res.data.modifiedCount) {
                 successAlert("Status Updated", `Parcel marked as ${newStatus.replace('_', ' ')}`);
@@ -70,7 +76,9 @@ const PendingDeliveries = () => {
 
                                 pendingParcelDetails.length === 0 ?
                                     <tr>
-                                        <td colSpan={9} className="text-center text-gray-500">No parcels found</td>
+                                        <td colSpan={9} className="text-center text-gray-500">
+                                            <span className="text-lg font-semibold">No Pending Parcels Found!</span>
+                                        </td>
                                     </tr>
                                     :
                                     pendingParcelDetails.map((parcel, index) => {
@@ -119,22 +127,11 @@ const PendingDeliveries = () => {
                                                         {
                                                             parcelDetails.delivery_status === 'in_transit' && (
                                                                 <button className="btn btn-block btn-sm btn-success text-white"
-                                                                    onClick={() => handleDeliveryStatusChange(parcelDetails.trackingId, "delivered")}>
+                                                                    onClick={() => handleDeliveryStatusChange(parcelDetails.trackingId, "delivered", user.email)}>
                                                                     Mark as Delivered
                                                                 </button>
                                                             )
                                                         }
-
-                                                        {
-                                                            parcelDetails.delivery_status === 'delivered' && (
-                                                                // badge badge-success rounded-4xl
-                                                                <div className="flex items-center justify-center gap-2 text-green-700 font-semibold bg-green-100 rounded-full py-2 shadow">
-                                                                    <FaCheckCircle className="text-lg" />
-                                                                    <span>Delivered</span>
-                                                                </div>
-                                                            )
-                                                        }
-
                                                         {parcelDetails.trackingId === statusChangingFor && <div className='w-8 mt-2 mx-auto'><LoadingInfinite></LoadingInfinite></div>}
                                                     </div>
 

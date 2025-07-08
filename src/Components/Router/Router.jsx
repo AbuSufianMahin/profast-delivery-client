@@ -27,6 +27,7 @@ import Forbidden from '../Pages/ErrorLayout/Forbidden/Forbidden';
 import AssignRider from '../Pages/DashboardLayoutPages/AssignRider/AssignRider';
 import PendingDeliveries from '../Pages/DashboardLayoutPages/PendingDeliveries/PendingDeliveries';
 import RiderRoute from '../../routes/RiderRoute';
+import CompletedDeliveries from '../Pages/DashboardLayoutPages/CompletedDeliveries/CompletedDeliveries';
 
 
 export const router = createBrowserRouter([
@@ -112,6 +113,10 @@ export const router = createBrowserRouter([
       {
         path: "pending-deliveries",
         element: <RiderRoute><PendingDeliveries></PendingDeliveries></RiderRoute>
+      },
+      {
+        path: "completed-deliveries",
+        element: <RiderRoute><CompletedDeliveries></CompletedDeliveries></RiderRoute>
       },
 
       // Routes for Admin only
