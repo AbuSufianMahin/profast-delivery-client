@@ -19,6 +19,14 @@ const CompletedDeliveries = () => {
             return res.data
         }
     })
+    const calculateriderCut = (fromCity, toCity, amount) => {
+        if (fromCity === toCity) {
+            return amount * 0.8;
+        }
+        else {
+            return amount * 0.3;
+        }
+    }
 
     return (
         <div className='min-h-screen p-4 md:p-6 lg:p-14'>
@@ -32,9 +40,11 @@ const CompletedDeliveries = () => {
                             <th>Tracking ID</th>
                             <th>Parcel Name</th>
                             <th>Weight (kg)</th>
-                            <th>Delivery Charge (৳)</th>
                             <th>Sender</th>
                             <th>Receiver</th>
+                            <th>Delivery Charge (৳)</th>
+                            <th>Your cut (৳)</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,39 +56,59 @@ const CompletedDeliveries = () => {
                                 :
                                 completedDeliveries.length === 0 ?
                                     <tr>
-                                        <td colSpan={8} className="text-center p-4 text-gray-500">No completed deliveries found.</td>
+                                        <td colSpan={9} className="text-center p-4 text-gray-500">No completed deliveries found.</td>
                                     </tr>
                                     :
-                                    completedDeliveries.map((parcel, index) => {
-                                        const { parcelDetails, senderDetails, receiverDetails } = parcel;
-                                        return (
-                                            <tr key={parcel._id}>
-                                                <td>{index + 1}</td>
-                                                <td>{parcelDetails.trackingId}</td>
-                                                <td>{parcelDetails.name}</td>
-                                                <td>{parcelDetails.weight}</td>
-                                                <td>৳{parcelDetails.deliveryCharge}</td>
-                                                <td>
-                                                    <div>
-                                                        <div className="font-semibold">{senderDetails.name}</div>
-                                                        <div className="text-xs">{senderDetails.contact}</div>
-                                                        <div className="text-xs opacity-70">{`${senderDetails.area}, ${senderDetails.city}`}</div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <div className="font-semibold">{receiverDetails.name}</div>
-                                                        <div className="text-xs">{receiverDetails.contact}</div>
-                                                        <div className="text-xs opacity-70">{`${receiverDetails.area}, ${receiverDetails.city}`}</div>
-                                                    </div>
-                                                </td>
+                                    <>
+                                        {
+                                            completedDeliveries.map((parcel, index) => {
+                                                const { parcelDetails, senderDetails, receiverDetails } = parcel;
+                                                return (
+                                                    <tr key={parcel._id}>
+                                                        <td>{index + 1}</td>
+                                                        <td>{parcelDetails.trackingId}</td>
+                                                        <td>{parcelDetails.name}</td>
+                                                        <td>{parcelDetails.weight}</td>
 
-                                            </tr>
-                                        );
-                                    }
-                                    )}
+                                                        <td>
+                                                            <div>
+                                                                <div className="font-semibold">{senderDetails.name}</div>
+                                                                <div className="text-xs opacity-70">{`${senderDetails.area}, ${senderDetails.city}`}</div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div>
+                                                                <div className="font-semibold">{receiverDetails.name}</div>
+                                                                <div className="text-xs opacity-70">{`${receiverDetails.area}, ${receiverDetails.city}`}</div>
+                                                            </div>
+                                                        </td>
+                                                        <td>৳{parcelDetails.deliveryCharge}</td>
+                                                        <td className='text-success font-semibold'>৳{calculateriderCut(senderDetails.city, receiverDetails.city, parcelDetails.deliveryCharge)}</td>
+                                                        <td className='text-center'>
+                                                            <button className='btn btn-sm btn-success'>Cashout</button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                        }
+                                        
+
+                                        <tr className='border-t-2 border-primary'>
+                                            <td colSpan={5} className="text-end text-lg">Total</td>
+                                            <td></td>
+                                            <td>৳hi</td>
+                                            <td>৳hi</td>
+                                            <td className='text-center'>
+                                                {/* <button className='btn btn-sm btn-success'>Cashout All</button> */}
+                                            </td>
+                                        </tr>
+
+                                    </>
+
+                        }
                     </tbody>
                 </table>
+
             </div>
         </div>
 
